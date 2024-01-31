@@ -107,6 +107,20 @@ local plugins = {
   --     require("mini.map").setup()
   --   end,
   -- },
+  {
+    "johmsalas/text-case.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("textcase").setup({})
+      require("telescope").load_extension("textcase")
+      vim.api.nvim_set_keymap('n', '<leader>ac', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope" })
+      vim.api.nvim_set_keymap('v', '<leader>ac', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+    end,
+    keys = {
+      "<leader>ac", -- Default invocation prefix
+      { "<leader>ac", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
+    },
+  },
 }
 
 return plugins

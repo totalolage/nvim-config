@@ -8,7 +8,19 @@ M.general = {
       end,
       "formatting",
     },
-  },
+    ["<leader>yn"] = {
+      "<cmd>let @+ = expand('%:t')<CR>",
+      "Yank Filename",
+    },
+    ["<leader>yp"] = {
+      "<cmd>let @+ = expand('%:~:.')<CR>",
+      "Yank Relative Path",
+    },
+    ["<leader>yf"] = {
+      "<cmd>let @+ = expand('%:p')<CR>",
+      "Yank Full Path",
+    },
+  }
 }
 
 -- Copilot
