@@ -107,4 +107,13 @@ M.vimflog = {
   }
 }
 
+M.markdownPreview = {
+  n = {
+    ["<leader>mp"] = {
+      "<cmd>MarkdownPreview<CR>",
+      "Preview markdown",
+    },
+  },
+}
+
 return M
