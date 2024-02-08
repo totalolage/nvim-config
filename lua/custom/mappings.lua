@@ -8,17 +8,17 @@ M.general = {
       end,
       "formatting",
     },
-    ["<leader>yn"] = {
+    ["ypn"] = {
       "<cmd>let @+ = expand('%:t')<CR>",
       "Yank Filename",
     },
-    ["<leader>yp"] = {
+    ["ypr"] = {
       "<cmd>let @+ = expand('%:~:.')<CR>",
-      "Yank Relative Path",
+      "Yank Path Relative",
     },
-    ["<leader>yf"] = {
+    ["ypf"] = {
       "<cmd>let @+ = expand('%:p')<CR>",
-      "Yank Full Path",
+      "Yank Path Full" ,
     },
   }
 }
