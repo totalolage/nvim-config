@@ -117,8 +117,8 @@ local plugins = {
       vim.api.nvim_set_keymap('v', '<leader>ac', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
     end,
     keys = {
-      "<leader>ac", -- Default invocation prefix
-      { "<leader>ac", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
+      "ga", -- Default invocation prefix
+      { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
     },
   },
 }
