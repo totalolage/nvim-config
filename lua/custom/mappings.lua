@@ -4,9 +4,9 @@ M.general = {
   n = {
     ["<leader>fm"] = {
       function()
-        require("conform").format()
+        require("conform").format({async = true})
       end,
-      "formatting",
+      "Format current buffer",
     },
     ["ypn"] = {
       "<cmd>let @+ = expand('%:t')<CR>",
@@ -115,5 +115,20 @@ M.markdownPreview = {
     },
   },
 }
+
+-- M.text_case = {
+--   n = {
+--     ["<leader>ac"] = {
+--       '<cmd>TextCaseOpenTelescope<CR>',
+--       "Amend case",
+--     },
+--   },
+--   v = {
+--     ["<leader>ac"] = {
+--       '<cmd>TextCaseOpenTelescope<CR>',
+--       "Amend case",
+--     },
+--   },
+-- }
 
 return M

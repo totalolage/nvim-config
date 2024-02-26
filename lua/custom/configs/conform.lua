@@ -5,7 +5,6 @@ local webdev_lsps = {
 
 local options = {
   lsp_fallback = true,
-  timeout_ms = 5000,
 
   formatters_by_ft = {
     lua = { "stylua" },
