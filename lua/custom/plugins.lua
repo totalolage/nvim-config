@@ -62,14 +62,14 @@ local plugins = {
     event = "VeryLazy",
   },
   "tpope/vim-fugitive",
-  {
-    "junegunn/gv.vim",
-    event = "VeryLazy",
-    cmd = "GV",
-    dependencies = {
-      "tpope/vim-fugitive",
-    },
-  },
+  -- {
+  --   "junegunn/gv.vim",
+  --   event = "VeryLazy",
+  --   cmd = "GV",
+  --   dependencies = {
+  --     "tpope/vim-fugitive",
+  --   },
+  -- },
   -- {
   --   "rhysd/conflict-marker.vim",
   --   event = "BufRead",
@@ -119,6 +119,14 @@ local plugins = {
     keys = {
       "ga", -- Default invocation prefix
       { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
+    },
+  },
+  {
+    "rbong/vim-flog",
+    lazy = true,
+    cmd = { "Flog", "Flogsplit", "Floggit" },
+    dependencies = {
+      "tpope/vim-fugitive",
     },
   },
 }

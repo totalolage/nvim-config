@@ -20,6 +20,18 @@ M.general = {
       "<cmd>let @+ = expand('%:p')<CR>",
       "Yank Path Full" ,
     },
+    ["g["] = {
+      function()
+        vim.diagnostic.goto_prev()
+      end,
+      "Jump to previous issue"
+    },
+    ["g]"] = {
+      function ()
+        vim.diagnostic.goto_next()
+      end,
+      "Jump to next issue"
+    }
   }
 }
 
@@ -46,12 +58,12 @@ M.telescope = {
       end,
       "Find definitions",
     },
-    ["<leader>fm"] = {
-      function()
-        vim.lsp.buf.format { async = true, timeout = 5000 }
-      end,
-      "LSP formatting",
-    },
+    -- ["<leader>fm"] = {
+    --   function()
+    --     vim.lsp.buf.format { async = true, timeout = 5000 }
+    --   end,
+    --   "LSP formatting",
+    -- },
   },
   v = {
     ["<leader>fe"] = {
@@ -75,15 +87,24 @@ M.telescope = {
   },
 }
 
-M.minimap = {
+-- M.minimap = {
+--   n = {
+--     ["<leader>mm"] = {
+--       function()
+--         MiniMap.toggle()
+--       end,
+--       "Toggle minimap",
+--     },
+--   },
+-- }
+
+M.vimflog = {
   n = {
-    ["<leader>mm"] = {
-      function()
-        MiniMap.toggle()
-      end,
-      "Toggle minimap",
-    },
-  },
+    ["<leader>gg"] = {
+      "<cmd>Flog -all<CR>",
+      "Open Git Graph"
+    }
+  }
 }
 
 return M
