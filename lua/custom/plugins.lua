@@ -61,7 +61,10 @@ local plugins = {
     "github/copilot.vim",
     event = "VeryLazy",
   },
-  "tpope/vim-fugitive",
+  {
+    "tpope/vim-fugitive",
+    cmd = "Git",
+  },
   -- {
   --   "junegunn/gv.vim",
   --   event = "VeryLazy",
@@ -114,8 +117,8 @@ local plugins = {
       require "custom.configs.text-case"
     end,
     keys = {
-      "ga", -- Default invocation prefix
-      { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
+      "<leader>ac",
+      { "<leader>ac.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
     },
   },
   {

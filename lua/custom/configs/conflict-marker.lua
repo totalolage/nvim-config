@@ -1,4 +1,4 @@
-local M = {
+local opts = {
   function ()
     vim.api.nvim_command('highlight ConflictMarkerBegin guibg=#2f7366')
     vim.api.nvim_command('highlight ConflictMarkerOurs guibg=#2e5049')
@@ -8,4 +8,4 @@ local M = {
   end
 }
 
-return M
+return opts
