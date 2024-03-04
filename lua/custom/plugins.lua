@@ -65,21 +65,6 @@ local plugins = {
     "tpope/vim-fugitive",
     cmd = "Git",
   },
-  -- {
-  --   "junegunn/gv.vim",
-  --   event = "VeryLazy",
-  --   cmd = "GV",
-  --   dependencies = {
-  --     "tpope/vim-fugitive",
-  --   },
-  -- },
-  -- {
-  --   "rhysd/conflict-marker.vim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require "custom.configs.conflict-marker"
-  --   end,
-  -- },
   {
     "stevearc/conform.nvim",
     event = "VeryLazy",
@@ -102,14 +87,6 @@ local plugins = {
       noautocmd = true,
     },
   },
-  -- {
-  --   "echasnovski/mini.nvim",
-  --   version = "*",
-  --   config = function()
-  --     -- require "custom.configs.minimap"
-  --     require("mini.map").setup()
-  --   end,
-  -- },
   {
     "johmsalas/text-case.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },

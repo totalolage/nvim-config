@@ -2,23 +2,29 @@ local M = {}
 
 M.general = {
   n = {
-    ["<leader>fm"] = {
-      function()
-        require("conform").format({async = true})
-      end,
-      "Format current buffer",
-    },
-    ["ypn"] = {
+    ["ypn "] = {
       "<cmd>let @+ = expand('%:t')<CR>",
       "Yank Filename",
     },
-    ["ypr"] = {
+    ["ypnn"] = {
+      "<cmd>let @+ = join([expand('%:t'), line('.')], ':')<CR>",
+      "Yank Filename with line number",
+    },
+    ["ypr "] = {
       "<cmd>let @+ = expand('%:~:.')<CR>",
       "Yank Path Relative",
     },
-    ["ypf"] = {
+    ["yprn"] = {
+      "<cmd>let @+ = join([expand('%:~:.'), line('.')], ':')<CR>",
+      "Yank Path Relative with line number",
+    },
+    ["ypf "] = {
       "<cmd>let @+ = expand('%:p')<CR>",
       "Yank Path Full" ,
+    },
+    ["ypfn"] = {
+      "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
+      "Yank Path Full with line number",
     },
     ["g["] = {
       function()
@@ -33,6 +39,17 @@ M.general = {
       "Jump to next issue"
     }
   }
+}
+
+M.conform = {
+  n = {
+    ["<leader>fm"] = {
+      function()
+        require("conform").format({ async = true })
+      end,
+      "Format current buffer",
+    },
+  },
 }
 
 -- Copilot
@@ -58,12 +75,6 @@ M.telescope = {
       end,
       "Find definitions",
     },
-    -- ["<leader>fm"] = {
-    --   function()
-    --     vim.lsp.buf.format { async = true, timeout = 5000 }
-    --   end,
-    --   "LSP formatting",
-    -- },
   },
   v = {
     ["<leader>fe"] = {
@@ -87,17 +98,6 @@ M.telescope = {
   },
 }
 
--- M.minimap = {
---   n = {
---     ["<leader>mm"] = {
---       function()
---         MiniMap.toggle()
---       end,
---       "Toggle minimap",
---     },
---   },
--- }
-
 M.vimflog = {
   n = {
     ["<leader>gg"] = {
@@ -115,20 +115,5 @@ M.markdownPreview = {
     },
   },
 }
-
--- M.text_case = {
---   n = {
---     ["<leader>ac"] = {
---       '<cmd>TextCaseOpenTelescope<CR>',
---       "Amend case",
---     },
---   },
---   v = {
---     ["<leader>ac"] = {
---       '<cmd>TextCaseOpenTelescope<CR>',
---       "Amend case",
---     },
---   },
--- }
 
 return M
