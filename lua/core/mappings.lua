@@ -52,6 +52,11 @@ M.general = {
       end,
       "LSP formatting",
     },
+
+    ["<leader>of"] = {
+      "<cmd>execute 'edit' fnameescape(@+)<CR>",
+      "Open last yanked file",
+    }
   },
 
   t = {
