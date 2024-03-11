@@ -58,6 +58,15 @@ local plugins = {
     end,
   },
   {
+    "nvim-tree/nvim-tree.lua",
+    opts = function()
+      local default_opts = require "plugins.configs.nvimtree"
+      local custom_opts = require "custom.configs.nvimtree"
+      local opts = vim.tbl_deep_extend("force", default_opts, custom_opts)
+      return opts
+    end,
+  },
+  {
     "github/copilot.vim",
     event = "VeryLazy",
   },
