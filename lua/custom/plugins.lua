@@ -53,6 +53,7 @@ local plugins = {
         "javascript",
         "typescript",
         "tsx",
+        "graphql",
       }
       return opts
     end,
