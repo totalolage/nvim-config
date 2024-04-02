@@ -3,7 +3,7 @@ local webdev_lsps = {
   "prettierd",
 }
 
-local options = {
+local opts = {
   lsp_fallback = true,
 
   formatters_by_ft = {
@@ -27,4 +27,4 @@ local options = {
   -- },
 }
 
-require("conform").setup(options)
+return opts

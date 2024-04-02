@@ -3,7 +3,7 @@ local plugins = {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
     opts = function()
-      return require "custom.configs.null-ls"
+      require "custom.configs.null-ls"
     end,
   },
   {
@@ -14,23 +14,6 @@ local plugins = {
     end,
   },
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        -- lua stuff
-        "lua-language-server",
-        "stylua",
-
-        -- webdev stuff
-        "eslint_d",
-        "prettierd",
-        "tailwindcss-language-server",
-        "typescript-language-server",
-        "graphql-language-service-cli",
-      },
-    },
-  },
-  {
     "windwp/nvim-ts-autotag",
     ft = {
       "javascript",
@@ -39,22 +22,14 @@ local plugins = {
       "typescriptreact",
       "html",
     },
-    config = function()
-      require("nvim-ts-autotag").setup()
-    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     opts = function()
-      local opts = require "plugins.configs.treesitter"
-      opts.ensure_installed = {
-        "lua",
-        "javascript",
-        "typescript",
-        "tsx",
-        "graphql",
-      }
+      local default_opts = require "plugins.configs.treesitter"
+      local custom_opts = require "custom.configs.treesitter"
+      local opts = vim.tbl_deep_extend("force",default_opts, custom_opts)
       return opts
     end,
   },
@@ -75,20 +50,18 @@ local plugins = {
     "tpope/vim-fugitive",
     cmd = "Git",
   },
+  "williamboman/mason.nvim",
   {
     "stevearc/conform.nvim",
-    event = "VeryLazy",
-    config = function()
+    opts = function()
       require "custom.configs.conform"
     end,
   },
+  "zapling/mason-conform.nvim",
   {
     "kylechui/nvim-surround",
     version = "*",
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup {}
-    end,
   },
   {
     "okuuva/auto-save.nvim",
