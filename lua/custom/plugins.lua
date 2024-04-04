@@ -60,7 +60,9 @@ local plugins = {
   {
     "kylechui/nvim-surround",
     version = "*",
-    event = "VeryLazy",
+    init = function()
+      require("nvim-surround").setup({})
+    end,
   },
   {
     "okuuva/auto-save.nvim",
