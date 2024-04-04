@@ -1,8 +1,5 @@
 vim.opt.relativenumber = true
 
--- Copilot
-vim.g.copilot_assume_mapped = true
-
 -- CD opening with a commandline path
 local group_cdpwd = vim.api.nvim_create_augroup("group_cdpwd", { clear = true })
 vim.api.nvim_create_autocmd("VimEnter", {

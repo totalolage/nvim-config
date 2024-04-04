@@ -41,6 +41,9 @@ local plugins = {
   {
     "github/copilot.vim",
     event = "VeryLazy",
+    init = function ()
+      vim.g.copilot_assume_mapped = true
+    end,
   },
   {
     "tpope/vim-fugitive",
