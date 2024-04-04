@@ -27,19 +27,15 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     opts = function()
-      local default_opts = require "plugins.configs.treesitter"
-      local custom_opts = require "custom.configs.treesitter"
-      local opts = vim.tbl_deep_extend("force",default_opts, custom_opts)
-      return opts
+      require "plugins.configs.treesitter"
+      require "custom.configs.treesitter"
     end,
   },
   {
     "nvim-tree/nvim-tree.lua",
     opts = function()
-      local default_opts = require "plugins.configs.nvimtree"
-      local custom_opts = require "custom.configs.nvimtree"
-      local opts = vim.tbl_deep_extend("force", default_opts, custom_opts)
-      return opts
+      require "plugins.configs.nvimtree"
+      require "custom.configs.nvimtree"
     end,
   },
   {
@@ -66,9 +62,9 @@ local plugins = {
   {
     "okuuva/auto-save.nvim",
     event = { "InsertLeave", "TextChanged" },
-    opts = {
-      noautocmd = true,
-    },
+    opts = function()
+      require "custom.configs.auto-save"
+    end,
   },
   {
     "johmsalas/text-case.nvim",
@@ -76,10 +72,6 @@ local plugins = {
     config = function()
       require "custom.configs.text-case"
     end,
-    keys = {
-      "<leader>ac",
-      { "<leader>ac.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
-    },
   },
   {
     "rbong/vim-flog",
@@ -98,6 +90,11 @@ local plugins = {
     end,
     ft = { "markdown" },
   },
+  -- {
+  --   "mistricky/codesnap.nvim",
+  --   build = "make",
+  --   cmd = { "CodeSnap" },
+  -- },
 }
 
 return plugins

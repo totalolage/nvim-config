@@ -37,6 +37,17 @@ M.general = {
         vim.diagnostic.goto_next()
       end,
       "Jump to next issue"
+    },
+    ["<leader>of"] = {
+      function ()
+        local filename = vim.fn.expand(vim.fn.fnameescape(vim.fn.getreg("+")))
+        if vim.fn.filereadable(filename) == 1 then
+          vim.cmd("e " .. filename)
+        else
+          vim.api.nvim_err_writeln("File does not exist: " .. filename)
+        end
+      end,
+      "Open last yanked file",
     }
   }
 }
@@ -112,6 +123,15 @@ M.markdownPreview = {
     ["<leader>mp"] = {
       "<cmd>MarkdownPreview<CR>",
       "Preview markdown",
+    },
+  },
+}
+
+M.textCase = {
+  v = {
+    ["<leader>ac."] = {
+      "<cmd>TextCaseOpenTelescope<CR>",
+      "Text Case Telescope",
     },
   },
 }
