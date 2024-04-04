@@ -40,12 +40,23 @@ M.general = {
     },
     ["<leader>of"] = {
       function ()
-        local filename = vim.fn.expand(vim.fn.fnameescape(vim.fn.getreg("+")))
-        if vim.fn.filereadable(filename) == 1 then
-          vim.cmd("e " .. filename)
-        else
+        local clipboard = vim.fn.getreg("+")
+        -- Clipboard path should be in format `file[:line[:column]]`
+        local parts = vim.split(clipboard, ":")
+        local filename_dirty = parts[1]
+        local line_dirty = parts[2]
+        local column_dirty = parts[3]
+
+        local filename = vim.fn.expand(vim.fn.fnameescape(filename_dirty))
+        if not vim.fn.filereadable(filename) then
           vim.api.nvim_err_writeln("File does not exist: " .. filename)
         end
+
+        local line = tonumber(line_dirty) or 1
+        local column = tonumber(column_dirty) or 1
+
+        vim.cmd("e " .. filename)
+        vim.fn.cursor(line, column)
       end,
       "Open last yanked file",
     }
