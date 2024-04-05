@@ -2,9 +2,7 @@ local plugins = {
   {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
-    opts = function()
-      require "custom.configs.null-ls"
-    end,
+    config = require "custom.configs.null-ls",
   },
   {
     "neovim/nvim-lspconfig",
@@ -26,17 +24,11 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    opts = function()
-      require "plugins.configs.treesitter"
-      require "custom.configs.treesitter"
-    end,
+    opts = vim.tbl_extend("force", require "plugins.configs.treesitter", require "custom.configs.treesitter"),
   },
   {
     "nvim-tree/nvim-tree.lua",
-    opts = function()
-      require "plugins.configs.nvimtree"
-      require "custom.configs.nvimtree"
-    end,
+    opts = vim.tbl_extend("force", require "plugins.configs.nvimtree", require "custom.configs.nvimtree"),
   },
   {
     "github/copilot.vim",
@@ -52,30 +44,30 @@ local plugins = {
   "williamboman/mason.nvim",
   {
     "stevearc/conform.nvim",
-    opts = function()
-      require "custom.configs.conform"
-    end,
+    opts = require "custom.configs.conform",
   },
   "zapling/mason-conform.nvim",
   {
     "kylechui/nvim-surround",
     version = "*",
+    -- For some godforsaken reason this is the only way to get nvim-surround to load
     init = function()
-      require("nvim-surround").setup({})
+      require "nvim-surround".setup {}
     end,
   },
   {
     "okuuva/auto-save.nvim",
     event = { "InsertLeave", "TextChanged" },
-    opts = function()
-      require "custom.configs.auto-save"
-    end,
+    opts = require "custom.configs.auto-save",
   },
   {
     "johmsalas/text-case.nvim",
+    lazy = false,
     dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function()
-      require "custom.configs.text-case"
+    opts = require "custom.configs.text-case",
+    config = function(_, opts)
+      require "textcase".setup(opts)
+      require "telescope".load_extension("textcase")
     end,
   },
   {

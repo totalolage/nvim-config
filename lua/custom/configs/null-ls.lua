@@ -1,7 +1,9 @@
 -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-local null_ls = require("null-ls")
 
-local opts = {
+return function(_, default_opts)
+  local null_ls = require("null-ls")
+
+  local opts = {
   sources = {
     null_ls.builtins.formatting.prettierd,
   },
@@ -20,5 +22,7 @@ local opts = {
   --     })
   --   end
   -- end,
-}
-return opts
+  }
+
+  null_ls.setup(vim.tbl_extend("force", default_opts, opts))
+end
