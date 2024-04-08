@@ -10,6 +10,10 @@ M.general = {
       "<cmd>let @+ = join([expand('%:t'), line('.')], ':')<CR>",
       "Yank Filename with line number",
     },
+    ["ypnc"] = {
+      "<cmd>let @+ = join([expand('%:t'), line('.'), col('.')], ':')<CR>",
+      "Yank Filename with line and column number",
+    },
     ["ypr "] = {
       "<cmd>let @+ = expand('%:~:.')<CR>",
       "Yank Path Relative",
@@ -18,6 +22,10 @@ M.general = {
       "<cmd>let @+ = join([expand('%:~:.'), line('.')], ':')<CR>",
       "Yank Path Relative with line number",
     },
+    ["yprc"] = {
+      "<cmd>let @+ = join([expand('%:~:.'), line('.'), col('.')], ':')<CR>",
+      "Yank Path Relative with line and column number",
+    },
     ["ypf "] = {
       "<cmd>let @+ = expand('%:p')<CR>",
       "Yank Path Full" ,
@@ -25,6 +33,10 @@ M.general = {
     ["ypfn"] = {
       "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
       "Yank Path Full with line number",
+    },
+    ["ypfc"] = {
+      "<cmd>let @+ = join([expand('%:p'), line('.'), col('.')], ':')<CR>",
+      "Yank Path Full with line and column number",
     },
     ["g["] = {
       function()
@@ -41,11 +53,23 @@ M.general = {
     ["<leader>of"] = {
       function ()
         local clipboard = vim.fn.getreg("+")
+
+        local filename_dirty, line_dirty, column_dirty
+
         -- Clipboard path should be in format `file[:line[:column]]`
-        local parts = vim.split(clipboard, ":")
-        local filename_dirty = parts[1]
-        local line_dirty = parts[2]
-        local column_dirty = parts[3]
+        if not filename_dirty then
+          filename_dirty, line_dirty, column_dirty = clipboard:match("(.+):(%d*):(%d*)")
+        end
+
+        -- Clipboard can alternatively be in the format `file(line,column)`
+        if not filename_dirty then
+          filename_dirty, line_dirty, column_dirty = clipboard:match("(.+)%((%d+),(%d+)%)")
+        end
+
+        -- If all else fails, just use the clipboard as the filename
+        if not filename_dirty then
+          filename_dirty = clipboard
+        end
 
         local filename = vim.fn.expand(vim.fn.fnameescape(filename_dirty))
         if not vim.fn.filereadable(filename) then
