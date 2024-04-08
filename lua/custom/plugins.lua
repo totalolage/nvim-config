@@ -92,6 +92,13 @@ local plugins = {
   --   build = "make",
   --   cmd = { "CodeSnap" },
   -- },
+  {
+    "chentoast/marks.nvim",
+    event = "BufRead",
+    config = function(_, opts)
+      require "marks".setup(opts)
+    end,
+  }
 }
 
 return plugins
