@@ -56,14 +56,18 @@ M.general = {
 
         local filename_dirty, line_dirty, column_dirty
 
+        -- src/views/DocumentCreate/DocumentFill/index.tsx:29
         -- Clipboard path should be in format `file[:line[:column]]`
         if not filename_dirty then
-          filename_dirty, line_dirty, column_dirty = clipboard:match("(.+):(%d*):(%d*)")
+          filename_dirty, line_dirty, column_dirty = clipboard:match("^(.+):([1-9]%d*):([1-9]%d*)$")
+        end
+        if not filename_dirty then
+          filename_dirty, line_dirty = clipboard:match("^(.+):([1-9]%d*)$")
         end
 
         -- Clipboard can alternatively be in the format `file(line,column)`
         if not filename_dirty then
-          filename_dirty, line_dirty, column_dirty = clipboard:match("(.+)%((%d+),(%d+)%)")
+          filename_dirty, line_dirty, column_dirty = clipboard:match("^(.+)%(([1-9]%d*),([1-9]%d*)%)$")
         end
 
         -- If all else fails, just use the clipboard as the filename
