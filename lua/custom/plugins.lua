@@ -46,7 +46,12 @@ local plugins = {
     "stevearc/conform.nvim",
     opts = require "custom.configs.conform",
   },
-  "zapling/mason-conform.nvim",
+  {
+    "zapling/mason-conform.nvim",
+    init = function()
+      require "mason-conform".setup()
+    end,
+  },
   {
     "kylechui/nvim-surround",
     version = "*",

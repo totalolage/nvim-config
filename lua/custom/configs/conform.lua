@@ -15,6 +15,8 @@ local opts = {
     typescriptreact = { webdev_lsps, "graphql" },
 
     graphql = { "graphql" },
+
+    yaml = { "yamlfmt" },
   },
 
   -- -- adding same formatter for multiple filetypes can look too much work for some
