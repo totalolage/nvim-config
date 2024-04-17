@@ -88,6 +88,20 @@ M.general = {
       end,
       "Open last yanked file",
     }
+  },
+  v = {
+     ["g["] = {
+      function()
+        vim.diagnostic.goto_prev()
+      end,
+      "Jump to previous issue"
+    },
+    ["g]"] = {
+      function ()
+        vim.diagnostic.goto_next()
+      end,
+      "Jump to next issue"
+    },
   }
 }
 
