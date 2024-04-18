@@ -33,7 +33,7 @@ local plugins = {
   {
     "github/copilot.vim",
     event = "VeryLazy",
-    init = function ()
+    init = function()
       vim.g.copilot_assume_mapped = true
     end,
   },
@@ -49,7 +49,7 @@ local plugins = {
   {
     "zapling/mason-conform.nvim",
     init = function()
-      require "mason-conform".setup()
+      require("mason-conform").setup()
     end,
   },
   {
@@ -57,7 +57,7 @@ local plugins = {
     version = "*",
     -- For some godforsaken reason this is the only way to get nvim-surround to load
     init = function()
-      require "nvim-surround".setup {}
+      require("nvim-surround").setup {}
     end,
   },
   {
@@ -71,8 +71,8 @@ local plugins = {
     dependencies = { "nvim-telescope/telescope.nvim" },
     opts = require "custom.configs.text-case",
     config = function(_, opts)
-      require "textcase".setup(opts)
-      require "telescope".load_extension("textcase")
+      require("textcase").setup(opts)
+      require("telescope").load_extension "textcase"
     end,
   },
   {
@@ -101,13 +101,18 @@ local plugins = {
     "chentoast/marks.nvim",
     event = "BufRead",
     config = function(_, opts)
-      require "marks".setup(opts)
+      require("marks").setup(opts)
     end,
   },
   {
-     "folke/trouble.nvim",
-     dependencies = { "nvim-tree/nvim-web-devicons" },
-  }
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  {
+    "jiaoshijie/undotree",
+    lazy = false,
+    dependencies = "nvim-lua/plenary.nvim",
+  },
 }
 
 return plugins

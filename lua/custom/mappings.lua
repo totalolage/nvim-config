@@ -28,7 +28,7 @@ M.general = {
     },
     ["ypf "] = {
       "<cmd>let @+ = expand('%:p')<CR>",
-      "Yank Path Full" ,
+      "Yank Path Full",
     },
     ["ypfn"] = {
       "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
@@ -42,32 +42,32 @@ M.general = {
       function()
         vim.diagnostic.goto_prev()
       end,
-      "Jump to previous issue"
+      "Jump to previous issue",
     },
     ["g]"] = {
-      function ()
+      function()
         vim.diagnostic.goto_next()
       end,
-      "Jump to next issue"
+      "Jump to next issue",
     },
     ["<leader>of"] = {
-      function ()
-        local clipboard = vim.fn.getreg("+")
+      function()
+        local clipboard = vim.fn.getreg "+"
 
         local filename_dirty, line_dirty, column_dirty
 
         -- src/views/DocumentCreate/DocumentFill/index.tsx:29
         -- Clipboard path should be in format `file[:line[:column]]`
         if not filename_dirty then
-          filename_dirty, line_dirty, column_dirty = clipboard:match("^(.+):([1-9]%d*):([1-9]%d*)$")
+          filename_dirty, line_dirty, column_dirty = clipboard:match "^(.+):([1-9]%d*):([1-9]%d*)$"
         end
         if not filename_dirty then
-          filename_dirty, line_dirty = clipboard:match("^(.+):([1-9]%d*)$")
+          filename_dirty, line_dirty = clipboard:match "^(.+):([1-9]%d*)$"
         end
 
         -- Clipboard can alternatively be in the format `file(line,column)`
         if not filename_dirty then
-          filename_dirty, line_dirty, column_dirty = clipboard:match("^(.+)%(([1-9]%d*),([1-9]%d*)%)$")
+          filename_dirty, line_dirty, column_dirty = clipboard:match "^(.+)%(([1-9]%d*),([1-9]%d*)%)$"
         end
 
         -- If all else fails, just use the clipboard as the filename
@@ -87,29 +87,29 @@ M.general = {
         vim.fn.cursor(line, column)
       end,
       "Open last yanked file",
-    }
+    },
   },
   v = {
-     ["g["] = {
+    ["g["] = {
       function()
         vim.diagnostic.goto_prev()
       end,
-      "Jump to previous issue"
+      "Jump to previous issue",
     },
     ["g]"] = {
-      function ()
+      function()
         vim.diagnostic.goto_next()
       end,
-      "Jump to next issue"
+      "Jump to next issue",
     },
-  }
+  },
 }
 
 M.conform = {
   n = {
     ["<leader>fm"] = {
       function()
-        require("conform").format({ async = true })
+        require("conform").format { async = true }
       end,
       "Format current buffer",
     },
@@ -174,9 +174,9 @@ M.vimflog = {
   n = {
     ["<leader>gg"] = {
       "<cmd>Flog -all<CR>",
-      "Open Git Graph"
-    }
-  }
+      "Open Git Graph",
+    },
+  },
 }
 
 M.markdownPreview = {
@@ -193,6 +193,15 @@ M.textCase = {
     ["<leader>ac."] = {
       "<cmd>TextCaseOpenTelescope<CR>",
       "Text Case Telescope",
+    },
+  },
+}
+
+M.undotree = {
+  n = {
+    ["<leader>u"] = {
+      "<cmd>UndotreeToggle<cr>",
+      "UndoTree toggle",
     },
   },
 }
