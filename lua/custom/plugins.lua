@@ -103,6 +103,10 @@ local plugins = {
     config = function(_, opts)
       require "marks".setup(opts)
     end,
+  },
+  {
+     "folke/trouble.nvim",
+     dependencies = { "nvim-tree/nvim-web-devicons" },
   }
 }
 
