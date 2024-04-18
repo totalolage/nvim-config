@@ -139,6 +139,10 @@ M.telescope = {
       end,
       "Find definitions",
     },
+    ["<leader>tr"] = {
+      "<cmd>Telescope resume<CR>",
+      "Resume last telescope session",
+    },
   },
   v = {
     ["<leader>fe"] = {
@@ -158,6 +162,10 @@ M.telescope = {
         require("telescope.builtin").lsp_definitions()
       end,
       "Find definitions",
+    },
+    ["<leader>tr"] = {
+      "<cmd>Telescope resume<CR>",
+      "Resume last telescope session",
     },
   },
 }
