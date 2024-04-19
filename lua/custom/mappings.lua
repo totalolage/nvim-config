@@ -2,6 +2,8 @@ local M = {}
 
 M.general = {
   n = {
+
+    -- Path yanks
     ["ypn "] = {
       "<cmd>let @+ = expand('%:t')<CR>",
       "Yank Filename",
@@ -26,18 +28,19 @@ M.general = {
       "<cmd>let @+ = join([expand('%:~:.'), line('.'), col('.')], ':')<CR>",
       "Yank Path Relative with line and column number",
     },
-    ["ypf "] = {
+    ["ypa "] = {
       "<cmd>let @+ = expand('%:p')<CR>",
-      "Yank Path Full",
+      "Yank Path Absolute",
     },
-    ["ypfn"] = {
+    ["ypan"] = {
       "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
-      "Yank Path Full with line number",
+      "Yank Path Absolute with line number",
     },
-    ["ypfc"] = {
+    ["ypac"] = {
       "<cmd>let @+ = join([expand('%:p'), line('.'), col('.')], ':')<CR>",
-      "Yank Path Full with line and column number",
+      "Yank Path Absolute with line and column number",
     },
+
     ["g["] = {
       function()
         vim.diagnostic.goto_prev()
