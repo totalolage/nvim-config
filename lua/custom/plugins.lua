@@ -107,6 +107,11 @@ local plugins = {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      {"<leader>tt", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Trouble document"},
+      {"<leader>tp", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Trouble project"},
+      {"<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Trouble quickfix"},
+    }
   },
   {
     "jiaoshijie/undotree",
