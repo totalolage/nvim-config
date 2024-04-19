@@ -2,7 +2,6 @@ local M = {}
 
 M.general = {
   n = {
-
     -- Path yanks
     ["ypn "] = {
       "<cmd>let @+ = expand('%:t')<CR>",
@@ -41,6 +40,7 @@ M.general = {
       "Yank Path Absolute with line and column number",
     },
 
+    -- Diagnostics
     ["g["] = {
       function()
         vim.diagnostic.goto_prev()
@@ -53,6 +53,8 @@ M.general = {
       end,
       "Jump to next issue",
     },
+
+    -- File opening
     ["<leader>of"] = {
       function()
         local clipboard = vim.fn.getreg "+"
@@ -203,7 +205,9 @@ M.textCase = {
 M.undotree = {
   n = {
     ["<leader>u"] = {
-      "<cmd>UndotreeToggle<cr>",
+      function()
+        require("undotree").toggle()
+      end,
       "UndoTree toggle",
     },
   },
