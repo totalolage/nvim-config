@@ -6,6 +6,9 @@ local plugins = {
   },
   {
     "neovim/nvim-lspconfig",
+    -- dependencies = {
+    --   "hrsh7th/nvim-cmp",
+    -- },
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
@@ -30,13 +33,13 @@ local plugins = {
     "nvim-tree/nvim-tree.lua",
     opts = vim.tbl_extend("force", require "plugins.configs.nvimtree", require "custom.configs.nvimtree"),
   },
-  {
-    "github/copilot.vim",
-    event = "VeryLazy",
-    init = function()
-      vim.g.copilot_assume_mapped = true
-    end,
-  },
+  -- {
+  --   "github/copilot.vim",
+  --   event = "InsertEnter",
+  --   init = function()
+  --     vim.g.copilot_assume_mapped = true
+  --   end,
+  -- },
   {
     "tpope/vim-fugitive",
     cmd = "Git",
@@ -108,16 +111,28 @@ local plugins = {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      {"<leader>tt", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Trouble document"},
-      {"<leader>tp", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Trouble project"},
-      {"<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Trouble quickfix"},
-    }
+      { "<leader>tt", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Trouble document" },
+      { "<leader>tp", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Trouble project" },
+      { "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Trouble quickfix" },
+    },
   },
   {
     "jiaoshijie/undotree",
     lazy = false,
     dependencies = "nvim-lua/plenary.nvim",
   },
+  -- {
+  --   "tzachar/cmp-ai",
+  --   dependencies = "nvim-lua/plenary.nvim",
+  --   config = require "custom.configs.cmp_ai"
+  -- },
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = {
+  --     "tzachar/cmp-ai",
+  --   },
+  --   opts = require "custom.configs.cmp"
+  -- },
 }
 
 return plugins

@@ -1,10 +1,14 @@
 local base = require "plugins.configs.lspconfig"
 local on_attach = base.on_attach
-local capibilities = base.capabilities
+local base_capibilities = base.capabilities
+local autocomplete_capibilities = require('cmp_nvim_lsp').default_capabilities()
+
+local capibilities = vim.tbl_deep_extend("force", base_capibilities, autocomplete_capibilities)
 
 local lspconfig = require "lspconfig"
 
 local servers = { "tsserver", "tailwindcss", "eslint", "graphql", "yamlls" }
+
 
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
