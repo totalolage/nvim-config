@@ -33,13 +33,13 @@ local plugins = {
     "nvim-tree/nvim-tree.lua",
     opts = vim.tbl_extend("force", require "plugins.configs.nvimtree", require "custom.configs.nvimtree"),
   },
-  -- {
-  --   "github/copilot.vim",
-  --   event = "InsertEnter",
-  --   init = function()
-  --     vim.g.copilot_assume_mapped = true
-  --   end,
-  -- },
+  {
+    "github/copilot.vim",
+    event = "InsertEnter",
+    init = function()
+      vim.g.copilot_assume_mapped = true
+    end,
+  },
   {
     "tpope/vim-fugitive",
     cmd = "Git",
