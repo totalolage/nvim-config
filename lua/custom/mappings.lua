@@ -178,7 +178,7 @@ M.telescope = {
 M.vimflog = {
   n = {
     ["<leader>gg"] = {
-      "<cmd>Flog -all<CR>",
+      "<cmd>Flog<CR>",
       "Open Git Graph",
     },
   },
