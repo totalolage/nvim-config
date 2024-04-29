@@ -9,10 +9,18 @@ local lspconfig = require "lspconfig"
 
 local servers = { "tsserver", "tailwindcss", "eslint", "graphql", "yamlls" }
 
+local server_settings = {
+  tsserver = {
+    implicitProjectConfiguration = {
+      checkJs = true,
+    }
+  }
+}
 
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capibilities = capibilities,
+    settings = server_settings[lsp],
   }
 end
