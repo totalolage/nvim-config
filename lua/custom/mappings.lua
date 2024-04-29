@@ -72,7 +72,7 @@ M.general = {
 
         -- Clipboard can alternatively be in the format `file(line,column)`
         if not filename_dirty then
-          filename_dirty, line_dirty, column_dirty = clipboard:match "^(.+)%(([1-9]%d*),([1-9]%d*)%)$"
+          filename_dirty, line_dirty, column_dirty = clipboard:match "^(%S+)%s+%(([1-9]%d*)[,:]([1-9]%d*)%)$"
         end
 
         -- If all else fails, just use the clipboard as the filename
