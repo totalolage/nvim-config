@@ -27,11 +27,19 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    opts = vim.tbl_extend("force", require "plugins.configs.treesitter", require "custom.configs.treesitter"),
+    opts = vim.tbl_extend(
+      "force",
+      require "plugins.configs.treesitter",
+      require "custom.configs.treesitter"
+    ),
   },
   {
     "nvim-tree/nvim-tree.lua",
-    opts = vim.tbl_extend("force", require "plugins.configs.nvimtree", require "custom.configs.nvimtree"),
+    opts = vim.tbl_extend(
+      "force",
+      require "plugins.configs.nvimtree",
+      require "custom.configs.nvimtree"
+    ),
   },
   {
     "github/copilot.vim",
@@ -44,7 +52,14 @@ local plugins = {
     "tpope/vim-fugitive",
     cmd = "Git",
   },
-  "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
+    opts = vim.tbl_extend(
+      "force",
+      require "plugins.configs.mason",
+      require "custom.configs.mason"
+    ),
+  },
   {
     "stevearc/conform.nvim",
     opts = require "custom.configs.conform",

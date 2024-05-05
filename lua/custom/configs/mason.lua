@@ -9,7 +9,7 @@ local opts = {
     "prettierd",
     "tailwindcss-language-server",
     "typescript-language-server",
-    "flow-language-server",
+    -- "flow-language-server",
     "graphql-language-service-cli",
   },
 }
