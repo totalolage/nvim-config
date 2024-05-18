@@ -181,6 +181,30 @@ M.vimflog = {
       "<cmd>Flog<CR>",
       "Open Git Graph",
     },
+    ["<leader>gf"] = {
+      "<cmd>Git fetch<CR>",
+      "Fetch from remote",
+    },
+    ["<leader>gpd"] = {
+      "<cmd>Git fetch<CR>Git pull<CR>",
+      "Pull from remote",
+    },
+    ["<leader>gpu"] = {
+      "<cmd>Git push<CR>",
+      "Push to remote",
+    },
+    ["<leader>gc"] = {
+      "<cmd>Git commit<CR>",
+      "Commit changes",
+    },
+    ["<leader>ga"] = {
+      "<cmd>Git commit --amend<CR>",
+      "Amend last commit",
+    },
+    ["<leader>ge"] = {
+      "<cmd>Git commit --amend --no-edit<CR>",
+      "Amend last commit without editing",
+    }
   },
 }
 
@@ -202,13 +226,46 @@ M.textCase = {
   },
 }
 
-M.undotree = {
+-- M.undotree = {
+--   n = {
+--     ["<leader>u"] = {
+--       function()
+--         require("undotree").toggle()
+--       end,
+--       "UndoTree toggle",
+--     },
+--   },
+-- }
+
+M.gitsigns = {
   n = {
-    ["<leader>u"] = {
-      function()
-        require("undotree").toggle()
-      end,
-      "UndoTree toggle",
+    ["<leader>gph"] = {
+      "<cmd>Gitsigns preview_hunk_inline<CR>",
+      "Preview hunk",
+    },
+    ["<leader>grh"] = {
+      "<cmd>Gitsigns reset_hunk<CR>",
+      "Reset hunk",
+    },
+    ["<leader>grf"] = {
+      "<cmd>Gitsigns reset_buffer<CR>",
+      "Reset current file",
+    },
+    ["<leader>gsh"] = {
+      "<cmd>Gitsigns stage_hunk<CR>",
+      "Stage hunk",
+    },
+    ["<leader>guh"] = {
+      "<cmd>Gitsigns undo_stage_hunk<CR>",
+      "Undo stage hunk",
+    },
+    ["<leader>gsf"] = {
+      "<cmd>Gitsigns stage_buffer<CR>",
+      "Stage current file",
+    },
+    ["<leader>guf"] = {
+      "<cmd>Gitsigns reset_buffer_index<CR>",
+      "Undo stage current file",
     },
   },
 }
