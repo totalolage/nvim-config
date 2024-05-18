@@ -1,5 +1,5 @@
 local webdev_lsps = {
-  "eslint_d",
+  "eslint-lsp",
   "prettierd",
 }
 
@@ -17,6 +17,7 @@ local opts = {
     graphql = { "graphql" },
 
     yaml = { "yamlfmt" },
+    json = { "jsonls" },
   },
 
   -- -- adding same formatter for multiple filetypes can look too much work for some

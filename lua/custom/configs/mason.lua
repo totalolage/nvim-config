@@ -5,12 +5,16 @@ local opts = {
     "stylua",
 
     -- webdev stuff
-    "eslint_d",
+    "eslint-lsp",
     "prettierd",
     "tailwindcss-language-server",
     "typescript-language-server",
     -- "flow-language-server",
     "graphql-language-service-cli",
+    "astro-language-server",
+
+    -- generic stuff
+    "json-lsp",
   },
 }
 

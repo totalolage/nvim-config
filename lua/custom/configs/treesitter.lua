@@ -1,11 +1,15 @@
 local opts = {
   ensure_installed = {
-    "lua",
-    "javascript",
-    "typescript",
-    "tsx",
+    "astro",
+    "css",
     "graphql",
-  }
+    "javascript",
+    "lua",
+    "markdown",
+    "markdown_inline",
+    "tsx",
+    "typescript",
+  },
 }
 
 return opts
