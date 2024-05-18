@@ -7,7 +7,15 @@ local capibilities = vim.tbl_deep_extend("force", base_capibilities, autocomplet
 
 local lspconfig = require "lspconfig"
 
-local servers = { "tsserver", "tailwindcss", "eslint", "graphql", "yamlls", "jsonls", "astro" }
+local servers = {
+  "astro",
+  "eslint",
+  "graphql",
+  "jsonls",
+  "tailwindcss",
+  "tsserver",
+  "yamlls",
+}
 
 local server_settings = {
   tsserver = {

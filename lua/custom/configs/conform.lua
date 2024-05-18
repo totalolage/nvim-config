@@ -9,15 +9,20 @@ local opts = {
   formatters_by_ft = {
     lua = { "stylua" },
 
+    yaml = { "yamlfmt" },
+    json = { "jsonls" },
+
+    html = { webdev_lsps },
+    css = { webdev_lsps },
+
     javascript = { webdev_lsps, "graphql" },
     javascriptreact = { webdev_lsps, "graphql" },
     typescript = { webdev_lsps, "graphql" },
     typescriptreact = { webdev_lsps, "graphql" },
 
-    graphql = { "graphql" },
+    astro = { webdev_lsps, "astro" },
 
-    yaml = { "yamlfmt" },
-    json = { "jsonls" },
+    graphql = { "graphql" },
   },
 
   -- -- adding same formatter for multiple filetypes can look too much work for some
