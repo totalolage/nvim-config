@@ -27,19 +27,11 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    opts = vim.tbl_extend(
-      "force",
-      require "plugins.configs.treesitter",
-      require "custom.configs.treesitter"
-    ),
+    opts = vim.tbl_extend("force", require "plugins.configs.treesitter", require "custom.configs.treesitter"),
   },
   {
     "nvim-tree/nvim-tree.lua",
-    opts = vim.tbl_extend(
-      "force",
-      require "plugins.configs.nvimtree",
-      require "custom.configs.nvimtree"
-    ),
+    opts = vim.tbl_extend("force", require "plugins.configs.nvimtree", require "custom.configs.nvimtree"),
   },
   {
     "github/copilot.vim",
@@ -54,11 +46,7 @@ local plugins = {
   },
   {
     "williamboman/mason.nvim",
-    opts = vim.tbl_extend(
-      "force",
-      require "plugins.configs.mason",
-      require "custom.configs.mason"
-    ),
+    opts = vim.tbl_extend("force", require "plugins.configs.mason", require "custom.configs.mason"),
   },
   {
     "stevearc/conform.nvim",
@@ -148,6 +136,11 @@ local plugins = {
   --   },
   --   opts = require "custom.configs.cmp"
   -- },
+  {
+    "brenoprata10/nvim-highlight-colors",
+    event = "VeryLazy",
+    opts = require "custom.configs.nvim-highlight-colors",
+  },
 }
 
 return plugins
