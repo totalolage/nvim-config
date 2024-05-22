@@ -141,6 +141,11 @@ local plugins = {
     event = "VeryLazy",
     opts = require "custom.configs.nvim-highlight-colors",
   },
+  {
+    "mfussenegger/nvim-dap",
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    config = require "custom.configs.dap",
+  },
 }
 
 return plugins
