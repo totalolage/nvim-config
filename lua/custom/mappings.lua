@@ -3,15 +3,15 @@ local M = {}
 M.general = {
   n = {
     -- Path yanks
-    ["ypn "] = {
+    ["ypl "] = {
       "<cmd>let @+ = expand('%:t')<CR>",
       "Yank Filename",
     },
-    ["ypnn"] = {
+    ["ypnl"] = {
       "<cmd>let @+ = join([expand('%:t'), line('.')], ':')<CR>",
       "Yank Filename with line number",
     },
-    ["ypnc"] = {
+    ["yplc"] = {
       "<cmd>let @+ = join([expand('%:t'), line('.'), col('.')], ':')<CR>",
       "Yank Filename with line and column number",
     },
@@ -19,7 +19,7 @@ M.general = {
       "<cmd>let @+ = expand('%:~:.')<CR>",
       "Yank Path Relative",
     },
-    ["yprn"] = {
+    ["yprl"] = {
       "<cmd>let @+ = join([expand('%:~:.'), line('.')], ':')<CR>",
       "Yank Path Relative with line number",
     },
@@ -31,7 +31,7 @@ M.general = {
       "<cmd>let @+ = expand('%:p')<CR>",
       "Yank Path Absolute",
     },
-    ["ypan"] = {
+    ["ypal"] = {
       "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
       "Yank Path Absolute with line number",
     },
