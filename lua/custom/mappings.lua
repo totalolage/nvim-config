@@ -70,9 +70,9 @@ M.general = {
           filename_dirty, line_dirty = clipboard:match "^(.+):([1-9]%d*)$"
         end
 
-        -- Clipboard can alternatively be in the format `file(line,column)`
+        -- Clipboard can alternatively be in the format `file(line[,:]column)`
         if not filename_dirty then
-          filename_dirty, line_dirty, column_dirty = clipboard:match "^(%S+)%s+%(([1-9]%d*)[,:]([1-9]%d*)%)$"
+          filename_dirty, line_dirty, column_dirty = clipboard:match "^(.+)%s*%(([1-9]%d*)[,:]([1-9]%d*)%)$"
         end
 
         -- If all else fails, just use the clipboard as the filename
@@ -83,6 +83,7 @@ M.general = {
         local filename = vim.fn.expand(vim.fn.fnameescape(filename_dirty))
         if not vim.fn.filereadable(filename) then
           vim.api.nvim_err_writeln("File does not exist: " .. filename)
+          return
         end
 
         local line = tonumber(line_dirty) or 1
@@ -122,7 +123,7 @@ M.conform = {
 }
 
 -- Copilot
-vim.api.nvim_set_keymap("i", "<D-Enter>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+vim.api.nvim_set_keymap("i", "<c-Y>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
 
 M.telescope = {
   n = {
