@@ -187,7 +187,7 @@ M.vimflog = {
       "Fetch from remote",
     },
     ["<leader>gpd"] = {
-      "<cmd>Git fetch<CR>Git pull<CR>",
+      "<cmd>Git pull<CR>",
       "Pull from remote",
     },
     ["<leader>gpu"] = {
