@@ -194,6 +194,10 @@ M.vimflog = {
       "<cmd>Git push<CR>",
       "Push to remote",
     },
+    ["<leader>gpf"] = {
+      "<cmd>Git push --force-with-lease<CR>",
+      "Force push to remote (with lease)",
+    },
     ["<leader>gc"] = {
       "<cmd>Git commit<CR>",
       "Commit changes",
