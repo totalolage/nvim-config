@@ -19,3 +19,10 @@ vim.api.nvim_command "autocmd TextYankPost * silent! lua vim.highlight.on_yank {
 
 -- Fold diff views
 vim.api.nvim_command "autocmd FileType git setlocal foldmethod=syntax"
+
+-- Custom file extensions
+vim.filetype.add({
+  extension = {
+    mdx = "mdx",
+  }
+})

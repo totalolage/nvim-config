@@ -27,7 +27,17 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    opts = vim.tbl_extend("force", require "plugins.configs.treesitter", require "custom.configs.treesitter"),
+    opts = vim.tbl_extend(
+      "force",
+      require "plugins.configs.treesitter",
+      require "custom.configs.treesitter"
+    ),
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "syntax")
+      require("nvim-treesitter.configs").setup(opts)
+      -- tell treesitter to use the markdown parser for mdx files
+      vim.treesitter.language.register('markdown', 'mdx')
+    end,
   },
   {
     "nvim-tree/nvim-tree.lua",
@@ -119,11 +129,11 @@ local plugins = {
       { "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Trouble quickfix" },
     },
   },
-  {
-    "jiaoshijie/undotree",
-    lazy = false,
-    dependencies = "nvim-lua/plenary.nvim",
-  },
+  -- {
+  --   "jiaoshijie/undotree",
+  --   lazy = false,
+  --   dependencies = "nvim-lua/plenary.nvim",
+  -- },
   -- {
   --   "tzachar/cmp-ai",
   --   dependencies = "nvim-lua/plenary.nvim",

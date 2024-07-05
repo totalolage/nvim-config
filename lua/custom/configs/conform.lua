@@ -14,6 +14,8 @@ local opts = {
 
     html = { webdev_lsps },
     css = { webdev_lsps },
+    markdown = { "remark-language-server" },
+    -- mdx = { "mdx-language-server" },
 
     javascript = { webdev_lsps, "graphql" },
     javascriptreact = { webdev_lsps, "graphql" },
