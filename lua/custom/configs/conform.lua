@@ -4,6 +4,7 @@ local webdev_lsps = {
 }
 
 local opts = {
+  log_level = vim.log.levels.DEBUG,
   lsp_fallback = true,
 
   formatters_by_ft = {
