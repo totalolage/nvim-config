@@ -15,6 +15,7 @@ local opts = {
 
     -- generic stuff
     "json-lsp",
+    "yaml-language-server",
     -- "mdx-analyzer",
     -- "remark-language-server",
   },
