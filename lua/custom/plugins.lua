@@ -27,29 +27,25 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    opts = vim.tbl_extend(
-      "force",
-      require "plugins.configs.treesitter",
-      require "custom.configs.treesitter"
-    ),
+    opts = vim.tbl_extend("force", require "plugins.configs.treesitter", require "custom.configs.treesitter"),
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "syntax")
       require("nvim-treesitter.configs").setup(opts)
       -- tell treesitter to use the markdown parser for mdx files
-      vim.treesitter.language.register('markdown', 'mdx')
+      vim.treesitter.language.register("markdown", "mdx")
     end,
   },
   {
     "nvim-tree/nvim-tree.lua",
     opts = vim.tbl_extend("force", require "plugins.configs.nvimtree", require "custom.configs.nvimtree"),
   },
-  {
-    "github/copilot.vim",
-    event = "InsertEnter",
-    init = function()
-      vim.g.copilot_assume_mapped = true
-    end,
-  },
+  -- {
+  --   "github/copilot.vim",
+  --   event = "InsertEnter",
+  --   init = function()
+  --     vim.g.copilot_assume_mapped = true
+  --   end,
+  -- },
   {
     "tpope/vim-fugitive",
     cmd = "Git",
@@ -155,6 +151,14 @@ local plugins = {
     "mfussenegger/nvim-dap",
     ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
     config = require "custom.configs.dap",
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = { "InsertEnter", "VeryLazy" },
+    opts = require "custom.configs.supermaven",
+    config = function(_, opts)
+      require("supermaven-nvim").setup(opts)
+    end,
   },
 }
 

@@ -13,12 +13,12 @@ local servers = {
   "graphql",
   "jsonls",
   "tailwindcss",
-  "tsserver",
+  "ts_ls",
   "yamlls",
 }
 
 local server_settings = {
-  tsserver = {
+  ts_ls = {
     implicitProjectConfiguration = {
       checkJs = true,
     }

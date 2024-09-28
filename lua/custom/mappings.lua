@@ -122,8 +122,8 @@ M.conform = {
   },
 }
 
--- Copilot
-vim.api.nvim_set_keymap("i", "<c-Y>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+-- -- Copilot
+-- vim.api.nvim_set_keymap("i", "<c-Y>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
 
 M.telescope = {
   n = {
