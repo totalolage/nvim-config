@@ -209,7 +209,7 @@ M.vimflog = {
     ["<leader>ge"] = {
       "<cmd>Git commit --amend --no-edit<CR>",
       "Amend last commit without editing",
-    }
+    },
   },
 }
 
@@ -243,34 +243,40 @@ M.textCase = {
 -- }
 
 M.gitsigns = {
+  plugin = true,
   n = {
-    ["<leader>gph"] = {
-      "<cmd>Gitsigns preview_hunk_inline<CR>",
-      "Preview hunk",
+    ["<leader>rb"] = {
+      function()
+        require("gitsigns").reset_buffer()
+      end,
+      "Reset buffer",
     },
-    ["<leader>grh"] = {
-      "<cmd>Gitsigns reset_hunk<CR>",
-      "Reset hunk",
-    },
-    ["<leader>grf"] = {
-      "<cmd>Gitsigns reset_buffer<CR>",
-      "Reset current file",
-    },
-    ["<leader>gsh"] = {
-      "<cmd>Gitsigns stage_hunk<CR>",
+    ["<leader>sh"] = {
+      function()
+        require("gitsigns").stage_hunk()
+      end,
       "Stage hunk",
-    },
-    ["<leader>guh"] = {
-      "<cmd>Gitsigns undo_stage_hunk<CR>",
+   },
+    ["<leader>uh"] = {
+      -- "<cmd>Gitsigns undo_stage_hunk<CR>",
+      function()
+        require("gitsigns").undo_stage_hunk()
+      end,
       "Undo stage hunk",
     },
-    ["<leader>gsf"] = {
-      "<cmd>Gitsigns stage_buffer<CR>",
-      "Stage current file",
+    ["<leader>sb"] = {
+      -- "<cmd>Gitsigns stage_buffer<CR>",
+      function()
+        require("gitsigns").stage_buffer()
+      end,
+      "Stage buffer",
     },
-    ["<leader>guf"] = {
-      "<cmd>Gitsigns reset_buffer_index<CR>",
-      "Undo stage current file",
+    ["<leader>ub"] = {
+      -- "<cmd>Gitsigns reset_buffer_index<CR>",
+      function()
+        require("gitsigns").reset_buffer_index()
+      end,
+      "Undo stage buffer",
     },
   },
 }
