@@ -1,6 +1,14 @@
 require "nvchad.options"
 
--- add yours here!
+vim.opt.relativenumber = true
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevelstart = 99
+vim.opt.cursorlineopt = 'both'
 
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
+-- Custom file extensions
+vim.filetype.add({
+  extension = {
+    mdx = "mdx",
+  }
+})
