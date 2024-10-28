@@ -76,7 +76,7 @@ return {
       desc = "Undo stage buffer",
     },
     {
-      "<leader>rb",
+      "<leader>Hr",
       function()
         require("gitsigns").reset_buffer()
       end,
