@@ -80,7 +80,20 @@ map("n", "<leader>of", function()
   vim.fn.cursor(line, column)
 end, { desc = "Open last yanked file" })
 
--- general:
+-- formattings:
 map("n", "<leader>fm", function()
   require("conform").format { async = true }
 end, { desc = "Format current buffer" })
+
+-- navigation
+map("n", "<leader>X", function()
+  require("nvchad.tabufline").closeAllBufs()
+end, { desc = "Close all buffers" })
+-- option + tab to move buffer to the right
+map("n", "<A-Tab>", function()
+  require("nvchad.tabufline").move_buf(1)
+end, { desc = "Move buffer to the right" })
+-- option + shift + tab to move buffer to the left (not working right now)
+map("n", "<A-S-Tab>", function()
+  require("nvchad.tabufline").move_buf(-1)
+end, { desc = "Move buffer to the left" })
