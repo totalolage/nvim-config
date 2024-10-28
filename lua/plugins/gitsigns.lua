@@ -2,34 +2,106 @@ return {
   "lewis6991/gitsigns.nvim",
   keys = {
     {
-      "<leader>sh",
-      "<cmd>lua require('gitsigns').stage_hunk()<CR>",
+      "<leader>hs",
+      function()
+        require("gitsigns").stage_hunk()
+      end,
       desc = "Stage hunk",
     },
     {
-      "<leader>uh",
-      "<cmd>lua require('gitsigns').undo_stage_hunk()<CR>",
+      "<leader>hu",
+      function()
+        require("gitsigns").undo_stage_hunk()
+      end,
       desc = "Undo stage hunk",
+      mode = "n",
     },
     {
-      "<leader>rh",
-      "<cmd>lua require('gitsigns').reset_hunk()<CR>",
+      "<leader>hr",
+      function()
+        require("gitsigns").reset_hunk()
+      end,
       desc = "Reset hunk",
+      mode = "n",
     },
     {
-      "<leader>sb",
-      "<cmd>lua require('gitsigns').stage_buffer()<CR>",
+      "<leader>hu",
+      function()
+        require("gitsigns").undo_stage_hunk { vim.fn.line ".", vim.fn.line "v" }
+      end,
+      desc = "Undo stage hunk",
+      mode = "v",
+    },
+    {
+      "<leader>hr",
+      function()
+        require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }
+      end,
+      desc = "Reset hunk",
+      mode = "v",
+    },
+    {
+      "<leader>hp",
+      function()
+        require("gitsigns").preview_hunk()
+      end,
+      desc = "Preview hunk",
+    },
+    {
+      "<leader>hb",
+      function()
+        require("gitsigns").blame_line { full = true }
+      end,
+      desc = "Blame line",
+    },
+    {
+      "<leader>Hd",
+      function()
+        require("gitsigns").diffthis()
+      end,
+      desc = "Diff this",
+    },
+    {
+      "<leader>Hs",
+      function()
+        require("gitsigns").stage_buffer()
+      end,
       desc = "Stage buffer",
     },
     {
-      "<leader>ub",
-      "<cmd>lua require('gitsigns').reset_buffer_index()<CR>",
+      "<leader>Hu",
+      function()
+        require("gitsigns").reset_buffer_index()
+      end,
       desc = "Undo stage buffer",
     },
     {
       "<leader>rb",
-      "<cmd>lua require('gitsigns').reset_buffer()<CR>",
+      function()
+        require("gitsigns").reset_buffer()
+      end,
       desc = "Reset buffer",
     },
-  }
+    {
+      "<leader>tb",
+      function()
+        require("gitsigns").toggle_current_line_blame()
+      end,
+      desc = "Toggle current line blame",
+    },
+    {
+      "]c",
+      function()
+        require("gitsigns").next_hunk()
+      end,
+      desc = "Next hunk",
+    },
+    {
+      "[c",
+      function()
+        require("gitsigns").prev_hunk()
+      end,
+      desc = "Prev hunk",
+    },
+  },
 }
