@@ -4,6 +4,9 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",
   },
+  opts = {
+    change_directory_command = "lua vim.api.nvim_set_current_dir"
+  },
   setup = function(_, opts)
     require("git-worktree").setup(opts)
     require("telescope").load_extension "git_worktree"
