@@ -2,41 +2,49 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
--- -- path yanks: (broken for some reason)
--- map("n", "ypl ", "<cmd>let @+ = expand('%:t')<CR>", { desc = "Yank Filename" })
--- map("n", "ypnl", "<cmd>let @+ = join([expand('%:t'), line('.')], ':')<CR>", { desc = "Yank Filename with line number" })
--- map(
---   "n",
---   "yplc",
---   "<cmd>let @+ = join([expand('%:t'), line('.'), col('.')], ':')<CR>",
---   { desc = "Yank Filename with line and column number" }
--- )
--- map("n", "ypr ", "<cmd>let @+ = expand('%:~:.')<CR>", { desc = "Yank Path Relative" })
--- map(
---   "n",
---   "yprl",
---   "<cmd>let @+ = join([expand('%:~:.'), line('.')], ':')<CR>",
---   { desc = "Yank Path Relative with line number" }
--- )
--- map(
---   "n",
---   "yprc",
---   "<cmd>let @+ = join([expand('%:~:.'), line('.'), col('.')], ':')<CR>",
---   { desc = "Yank Path Relative with line and column number" }
--- )
--- map("n", "ypa ", "<cmd>let @+ = expand('%:p')<CR>", { desc = "Yank Path Absolute" })
--- map(
---   "n",
---   "ypal",
---   "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
---   { desc = "Yank Path Absolute with line number" }
--- )
--- map(
---   "n",
---   "ypac",
---   "<cmd>let @+ = join([expand('%:p'), line('.'), col('.')], ':')<CR>",
---   { desc = "Yank Path Absolute with line and column number" }
--- )
+-- path yanks: (broken for some reason)
+map("n", "<leader>yf", "", { desc = "Yank filename" })
+map("n", "<leader>yf ", "<cmd>let @+ = expand('%:t')<CR>", { desc = "Yank filename" })
+map(
+  "n",
+  "<leader>yfl",
+  "<cmd>let @+ = join([expand('%:t'), line('.')], ':')<CR>",
+  { desc = "Yank path filename with line number" }
+)
+map(
+  "n",
+  "<leader>yfc",
+  "<cmd>let @+ = join([expand('%:t'), line('.'), col('.')], ':')<CR>",
+  { desc = "Yank path filename with cursor position" }
+)
+map("n", "<leader>yr", "", { desc = "Yank relative path" })
+map("n", "<leader>yr", "<cmd>let @+ = expand('%:~:.')<CR>", { desc = "Yank relative path" })
+map(
+  "n",
+  "<leader>yrl",
+  "<cmd>let @+ = join([expand('%:~:.'), line('.')], ':')<CR>",
+  { desc = "Yank relative path with line number" }
+)
+map(
+  "n",
+  "<leader>yrc",
+  "<cmd>let @+ = join([expand('%:~:.'), line('.'), col('.')], ':')<CR>",
+  { desc = "Yank relative path with cursor position" }
+)
+map("n", "<leader>ya", "", { desc = "Yank absolute path" })
+map("n", "<leader>ya ", "<cmd>let @+ = expand('%:p')<CR>", { desc = "Yank absolute path" })
+map(
+  "n",
+  "<leader>yal",
+  "<cmd>let @+ = join([expand('%:p'), line('.')], ':')<CR>",
+  { desc = "Yank path absolute with line number" }
+)
+map(
+  "n",
+  "<leader>yac",
+  "<cmd>let @+ = join([expand('%:p'), line('.'), col('.')], ':')<CR>",
+  { desc = "Yank absolute path with cursor position" }
+)
 
 -- diagnostics:
 map("n", "[e", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Jump to previous issue" })
