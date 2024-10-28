@@ -1,5 +1,5 @@
 return {
-  enabled = "false",
+  enabled = false,
   "mfussenegger/nvim-dap",
   ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   config = function(_, opts)
