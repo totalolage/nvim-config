@@ -83,6 +83,13 @@ return {
       desc = "Reset buffer",
     },
     {
+      "<leader>td",
+      function()
+        require("gitsigns").toggle_deleted()
+      end,
+      desc = "Toggle deleted",
+    },
+    {
       "<leader>tb",
       function()
         require("gitsigns").toggle_current_line_blame()
