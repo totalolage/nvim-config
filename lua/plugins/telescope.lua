@@ -5,6 +5,7 @@ return {
       "<leader>fe",
       "<cmd>Telescope grep_string<CR>",
       desc = "Find word",
+      mode = {"n", "v"},
     },
     {
       "<leader>fr",
