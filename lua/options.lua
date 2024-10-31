@@ -10,5 +10,8 @@ vim.opt.cursorlineopt = 'both'
 vim.filetype.add({
   extension = {
     mdx = "mdx",
+  },
+  filename = {
+    ['.nvimrc'] = 'lua',
   }
 })
