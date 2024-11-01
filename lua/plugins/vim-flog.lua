@@ -55,6 +55,11 @@ return {
       "<leader>gma",
       "<cmd>Git merge --abort<CR>",
       desc = "Abort merge",
+    },
+    {
+      "<leader>gmt",
+      "<cmd>Git mergetool<CR>",
+      desc = "Mergetool",
     }
   },
 }
