@@ -46,5 +46,15 @@ return {
       "<cmd>Git commit --amend --no-edit<CR>",
       desc = "Amend last commit without editing",
     },
+    {
+      "<leader>gmc",
+      "<cmd>Git merge --continue<CR>",
+      desc = "Continue merge",
+    },
+    {
+      "<leader>gma",
+      "<cmd>Git merge --abort<CR>",
+      desc = "Abort merge",
+    }
   },
 }
