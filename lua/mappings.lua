@@ -46,9 +46,10 @@ map(
   { desc = "Yank absolute path with cursor position" }
 )
 
--- diagnostics:
-map("n", "[e", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Jump to previous issue" })
-map("n", "]e", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Jump to next issue" })
+-- diagnostics
+map("n", "<leader>ds", function()
+  vim.diagnostic.open_float()
+end, { desc = "Show diagnostics" })
 
 -- file opening:
 map("n", "<leader>of", function()
