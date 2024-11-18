@@ -103,7 +103,7 @@ end, { desc = "Open last yanked file" })
 
 -- formattings:
 map("n", "<leader>fm", function()
-  require("conform").format { async = true }
+  require("conform").format { async = true, lsp_format = "fallback" }
 end, { desc = "Format current buffer" })
 
 -- navigation
