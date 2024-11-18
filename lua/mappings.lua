@@ -57,6 +57,15 @@ map("n", "<leader>of", function()
 
   local filename_dirty, line_dirty, column_dirty
 
+  -- libs/gql-server/src/resolvers/breakdown/utils/transformBackendError.ts#L31
+  if not filename_dirty then
+    filename_dirty, line_dirty, column_dirty = clipboard:match "^(.+)#L([1-9]%d*)$"
+  end
+  -- libs/gql-server/src/resolvers/breakdown/utils/transformBackendError.ts#L31-L36
+  if not filename_dirty then
+    filename_dirty, line_dirty, column_dirty = clipboard:match "^(.+)#L([1-9]%d*)-L([1-9]%d*)$"
+  end
+
   -- src/views/DocumentCreate/DocumentFill/index.tsx:29
   -- Clipboard path should be in format `file[:line[:column]]`
   if not filename_dirty then
@@ -84,6 +93,9 @@ map("n", "<leader>of", function()
 
   local line = tonumber(line_dirty) or 1
   local column = tonumber(column_dirty) or 1
+
+  -- -- paste debug info into the current buffer
+  -- vim.cmd("echom 'Yanked file: " .. filename .. "' | echom 'Yanked line: " .. line .. "' | echom 'Yanked column: " .. column .. "'")
 
   vim.cmd("e " .. filename)
   vim.fn.cursor(line, column)
