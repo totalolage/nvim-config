@@ -20,6 +20,10 @@ return {
 
     display = {
       chat = {
+        window = {
+          layout = "float",
+        },
+        start_in_insert_mode = true,
         render_headers = false,
       },
     },
@@ -56,7 +60,7 @@ return {
       function()
         require("codecompanion").toggle()
       end,
-      desc = "CodeCompanion",
+      desc = "Toggle CodeCompanion",
       mode = { "n", "v" },
     },
     {
