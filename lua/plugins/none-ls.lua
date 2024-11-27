@@ -6,7 +6,9 @@ return {
 
     null_ls.setup(vim.tbl_extend("force", default_opts, {
       sources = {
-        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.prettierd.with {
+          extra_filetypes = { "astro" },
+        },
       },
       -- on_attach = function (client, bufnr)
       --   if client.supports_method("textDocument/formatting") then
