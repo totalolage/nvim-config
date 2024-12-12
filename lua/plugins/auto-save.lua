@@ -1,7 +1,5 @@
 return {
   "okuuva/auto-save.nvim",
   event = { "InsertLeave", "TextChanged" },
-  opts = {
-    noautocmd = true,
-  },
+  opts = {},
 }

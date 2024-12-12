@@ -12,9 +12,12 @@ return {
       discovery = {
         enabled = false,
       },
+      output = {
+        open_on_run = false,
+      },
       adapters = {
         require "neotest-jest" {
-          jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand "%:p:h") .. " --watch",
+          jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand "%:p:h"),
           --     jestConfigFile = function(file)
           --       if string.find(file, "/libs/") then
           --         return string.match(file, "(.-/[^/]+/)src") .. "jest.config.ts"
@@ -47,7 +50,7 @@ return {
     {
       "<leader>tO",
       function()
-        require("neotest").output.toggle()
+        require("neotest").output_panel.toggle()
       end,
       desc = "Toggle Output Panel",
     },
@@ -85,7 +88,7 @@ return {
     },
 
     {
-      "<leader>tT",
+      "<leader>tA",
       function()
         require("neotest").run.run(vim.fn.getcwd())
       end,

@@ -18,7 +18,7 @@ return {
       desc = "Find definitions",
     },
     {
-      "<leader>tr",
+      "<leader>te",
       "<cmd>Telescope resume<CR>",
       desc = "Resume last telescope session",
     },
