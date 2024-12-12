@@ -47,6 +47,11 @@ return {
       desc = "Amend last commit without editing",
     },
     {
+      "<leader>gmt",
+      "<cmd>Git mergetool<CR>",
+      desc = "Mergetool",
+    },
+    {
       "<leader>gmc",
       "<cmd>Git merge --continue<CR>",
       desc = "Continue merge",
@@ -57,9 +62,39 @@ return {
       desc = "Abort merge",
     },
     {
-      "<leader>gmt",
-      "<cmd>Git mergetool<CR>",
-      desc = "Mergetool",
-    }
+      "<leader>grc",
+      "<cmd>Git rebase --continue<CR>",
+      desc = "Continue rebase",
+    },
+    {
+      "<leader>gra",
+      "<cmd>Git rebase --abort<CR>",
+      desc = "Abort rebase",
+    },
+    {
+      "<leader>gbs",
+      "<cmd>Git bisect start<CR>",
+      desc = "Bisect start",
+    },
+    {
+      "<leader>gbg",
+      "<cmd>Git bisect good<CR>",
+      desc = "Bisect good",
+    },
+    {
+      "<leader>gbb",
+      "<cmd>Git bisect bad<CR>",
+      desc = "Bisect bad",
+    },
+    {
+      "<leader>gbr",
+      "<cmd>Git bisect reset<CR>",
+      desc = "Bisect reset",
+    },
+    {
+      "<leader>gbp",
+      "<cmd>Git bisect visualize<CR>",
+      desc = "Bisect visualize",
+    },
   },
 }
