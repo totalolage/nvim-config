@@ -9,6 +9,9 @@ return {
   },
   opts = function()
     return {
+      discovery = {
+        enabled = false,
+      },
       adapters = {
         require "neotest-jest" {
           jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand "%:p:h") .. " --watch",
@@ -68,17 +71,17 @@ return {
     {
       "<leader>tS",
       function()
-        require("neotest").stop()
+        require("neotest").run.stop()
       end,
       desc = "Stop",
     },
 
     {
-      "<leader>tt",
+      "<leader>tR",
       function()
         require("neotest").run.run(vim.fn.expand "%:p:h")
       end,
-      desc = "Run File",
+      desc = "Test File",
     },
 
     {
@@ -102,6 +105,6 @@ return {
         require("neotest").watch.toggle(vim.fn.expand "%:p:h")
       end,
       desc = "Toggle Watch for File",
-    }
+    },
   },
 }
