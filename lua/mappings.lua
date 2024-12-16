@@ -118,3 +118,9 @@ end, { desc = "Move buffer to the right" })
 map("n", "<A-S-Tab>", function()
   require("nvchad.tabufline").move_buf(-1)
 end, { desc = "Move buffer to the left" })
+
+-- disable arrow keys
+map({ "n", "v" }, "<Left>", "<Nop>", { noremap = true })
+map({ "n", "v" }, "<Right>", "<Nop>", { noremap = true })
+map({ "n", "v" }, "<Up>", "<Nop>", { noremap = true })
+map({ "n", "v" }, "<Down>", "<Nop>", { noremap = true })
