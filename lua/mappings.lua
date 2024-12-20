@@ -119,6 +119,12 @@ map("n", "<A-S-Tab>", function()
   require("nvchad.tabufline").move_buf(-1)
 end, { desc = "Move buffer to the left" })
 
+-- window sizing
+map("n", "=", "<C-w>+", { desc = "Increase window height" })
+map("n", "-", "<C-w>-", { desc = "Decrease window height" })
+map("n", "+", "<C-w>>", { desc = "Increase window width" })
+map("n", "_", "<C-w><", { desc = "Decrease window width" })
+
 -- disable arrow keys
 map({ "n", "v" }, "<Left>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<Right>", "<Nop>", { noremap = true })
