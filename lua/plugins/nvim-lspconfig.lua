@@ -29,6 +29,11 @@ return {
           checkJs = true,
         },
       },
+      yamlls = {
+        schemaStore = {
+          enable = true,
+        },
+      }
     }
 
 
