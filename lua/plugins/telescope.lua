@@ -1,11 +1,21 @@
 return {
   "nvim-telescope/telescope.nvim",
+  opts = {
+    defaults = {
+      mappings = {
+        n = {
+          ["<Up>"] = false,
+          ["<Down>"] = false,
+        },
+      },
+    },
+  },
   keys = {
     {
       "<leader>fe",
       "<cmd>Telescope grep_string<CR>",
       desc = "Find word",
-      mode = {"n", "v"},
+      mode = { "n", "v" },
     },
     {
       "<leader>fr",
@@ -22,5 +32,5 @@ return {
       "<cmd>Telescope resume<CR>",
       desc = "Resume last telescope session",
     },
-  }
+  },
 }
