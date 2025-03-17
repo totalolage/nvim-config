@@ -29,13 +29,24 @@ return {
           checkJs = true,
         },
       },
+      jsonls = {
+        schemas = {
+          {
+            fileMatch = { "package.json" },
+            url = "https://json.schemastore.org/package.json",
+          },
+          {
+            fileMatch = { "tsconfig.json", "tsconfig.*.json" },
+            url = "http://json.schemastore.org/tsconfig",
+          },
+        },
+      },
       yamlls = {
         schemaStore = {
           enable = true,
         },
       }
     }
-
 
     -- lsps with default config
     for _, lsp in ipairs(servers) do

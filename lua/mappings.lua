@@ -101,11 +101,6 @@ map("n", "<leader>of", function()
   vim.fn.cursor(line, column)
 end, { desc = "Open last yanked file" })
 
--- formattings:
-map("n", "<leader>fm", function()
-  require("conform").format { async = true, lsp_format = "fallback" }
-end, { desc = "Format current buffer" })
-
 -- navigation
 map("n", "<leader>X", function()
   require("nvchad.tabufline").closeAllBufs()
@@ -115,7 +110,7 @@ map("n", "<A-Tab>", function()
   require("nvchad.tabufline").move_buf(1)
 end, { desc = "Move buffer to the right" })
 -- option + shift + tab to move buffer to the left (not working right now)
-map("n", "<A-S-Tab>", function()
+map("n", "<A-Shift-Tab>", function()
   require("nvchad.tabufline").move_buf(-1)
 end, { desc = "Move buffer to the left" })
 
@@ -130,3 +125,9 @@ map({ "n", "v" }, "<Left>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<Right>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<Up>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<Down>", "<Nop>", { noremap = true })
+
+-- disable control-hjkl movement
+map({ "n", "v" }, "<C-h>", "<Nop>", { noremap = true })
+map({ "n", "v" }, "<C-j>", "<Nop>", { noremap = true })
+map({ "n", "v" }, "<C-k>", "<Nop>", { noremap = true })
+map({ "n", "v" }, "<C-l>", "<Nop>", { noremap = true })
