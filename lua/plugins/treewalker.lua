@@ -28,10 +28,10 @@ return {
   -- vim.keymap.set('n', '<C-S-l>', '<cmd>Treewalker SwapRight<cr>', { silent = true })
   cmd = "Treewalker",
   keys = {
-    { "<C-k>", "<cmd>Treewalker Up<cr>", mode = { "n", "v" }, "Treewalker up" },
-    { "<C-j>", "<cmd>Treewalker Down<cr>", mode = { "n", "v" }, "Treewalker down" },
-    { "<C-h>", "<cmd>Treewalker Left<cr>", mode = { "n", "v" }, "Treewalker left" },
-    { "<C-l>", "<cmd>Treewalker Right<cr>", mode = { "n", "v" }, "Treewalker right" },
+    { "<C-k>", "<cmd>Treewalker Up<cr>", mode = { "n", "v" }, desc = "Treewalker up" },
+    { "<C-j>", "<cmd>Treewalker Down<cr>", mode = { "n", "v" }, desc = "Treewalker down" },
+    { "<C-h>", "<cmd>Treewalker Left<cr>", mode = { "n", "v" }, desc = "Treewalker left" },
+    { "<C-l>", "<cmd>Treewalker Right<cr>", mode = { "n", "v" }, desc = "Treewalker right" },
     { "<C-S-k>", "<cmd>Treewalker SwapUp<cr>", mode = "n", desc = "Swap with the node above" },
     { "<C-S-j>", "<cmd>Treewalker SwapDown<cr>", mode = "n", desc = "Swap with the node below" },
     { "<C-S-h>", "<cmd>Treewalker SwapLeft<cr>", mode = "n", desc = "Swap with the node to the left" },
