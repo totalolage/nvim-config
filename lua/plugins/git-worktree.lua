@@ -6,7 +6,8 @@ return {
   },
   opts = {
     change_directory_command = "lua vim.api.nvim_set_current_dir",
-    -- update_on_change_command = "lua require('nvchad.tabufline').closeAllBufs()"
+    -- change_directory_command = "lua vim.api.nvim_set_current_dir",
+    update_on_change_command = "!fnm use"
   },
   setup = function(_, opts)
     require("git-worktree").setup(opts)
