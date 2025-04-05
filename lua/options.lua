@@ -13,3 +13,6 @@ vim.filetype.add({
     mdx = "mdx",
   },
 })
+
+-- Environment variables
+vim.env.NVIM_SOCKET_PATH = vim.api.nvim_eval("v:servername")
