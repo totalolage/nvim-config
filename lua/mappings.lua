@@ -126,8 +126,8 @@ map({ "n", "v" }, "<Right>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<Up>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<Down>", "<Nop>", { noremap = true })
 
--- disable control-hjkl movement
-map({ "n", "v" }, "<C-h>", "<Nop>", { noremap = true })
-map({ "n", "v" }, "<C-j>", "<Nop>", { noremap = true })
-map({ "n", "v" }, "<C-k>", "<Nop>", { noremap = true })
-map({ "n", "v" }, "<C-l>", "<Nop>", { noremap = true })
+-- remap control-hjkl movement to focus
+map("n", "<A-h>", "<C-w>h", { noremap = true, desc = "Focus left window" })
+map("n", "<A-j>", "<C-w>j", { noremap = true, desc = "Focus down window" })
+map("n", "<A-k>", "<C-w>k", { noremap = true, desc = "Focus up window" })
+map("n", "<A-l>", "<C-w>l", { noremap = true, desc = "Focus right window" })
