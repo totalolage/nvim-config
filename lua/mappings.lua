@@ -51,6 +51,9 @@ map("n", "<leader>ds", function()
   vim.diagnostic.open_float()
 end, { desc = "Show diagnostics" })
 
+-- LSP
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+
 -- file opening:
 map("n", "<leader>of", function()
   local clipboard = vim.fn.getreg "+"

@@ -5,7 +5,9 @@ return {
   },
   config = true,
   opts = {
-    -- Terminal options
+    env = {
+      SHELL = "/bin/bash",
+    },
     terminal = {
       split_width_percentage = 0.5,
     },
