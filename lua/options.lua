@@ -16,3 +16,10 @@ vim.filetype.add({
 
 -- Environment variables
 vim.env.NVIM_SOCKET_PATH = vim.api.nvim_eval("v:servername")
+
+-- Shell configuration for proper fnm integration
+vim.opt.shell = vim.fn.stdpath("config") .. "/nvim-shell"
+vim.opt.shellcmdflag = ""
+
+-- Set up shell environment for fnm
+vim.env.SHELL = "/bin/zsh"

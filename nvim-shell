@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+if [[ -f .nvmrc ]] && command -v fnm >/dev/null 2>&1; then
+  fnm use >/dev/null 2>&1
+fi
+
+# If no arguments, start interactive shell
+if [[ $# -eq 0 ]]; then
+  exec /bin/zsh
+else
+  # Execute the command
+  eval "$@"
+fi
