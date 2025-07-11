@@ -77,6 +77,11 @@ map("n", "<leader>of", function()
   if not filename_dirty then
     filename_dirty, line_dirty = clipboard:match "^(.+):([1-9]%d*)$"
   end
+  -- Support colon-separated line ranges: file:start-end
+  local line_end
+  if not filename_dirty then
+    filename_dirty, line_dirty, line_end = clipboard:match "^(.+):([1-9]%d*)-([1-9]%d*)$"
+  end
 
   -- Clipboard can alternatively be in the format `file(line[,:]column)`
   if not filename_dirty then
@@ -96,12 +101,19 @@ map("n", "<leader>of", function()
 
   local line = tonumber(line_dirty) or 1
   local column = tonumber(column_dirty) or 1
+  local end_line = tonumber(line_end)
 
   -- -- paste debug info into the current buffer
   -- vim.cmd("echom 'Yanked file: " .. filename .. "' | echom 'Yanked line: " .. line .. "' | echom 'Yanked column: " .. column .. "'")
 
   vim.cmd("e " .. filename)
   vim.fn.cursor(line, column)
+  
+  -- If we have a line range, select it in visual line mode
+  if end_line and end_line > line then
+    vim.cmd("normal! V")
+    vim.fn.cursor(end_line, 1)
+  end
 end, { desc = "Open last yanked file" })
 
 -- navigation
