@@ -146,3 +146,28 @@ map({ "n", "v" }, "<C-h>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<C-j>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<C-k>", "<Nop>", { noremap = true })
 map({ "n", "v" }, "<C-l>", "<Nop>", { noremap = true })
+
+-- quickfix list operations
+map("n", "<leader>qo", "<cmd>copen<CR>", { desc = "Open quickfix list" })
+map("n", "<leader>qc", "<cmd>cclose<CR>", { desc = "Close quickfix list" })
+map("n", "<leader>qn", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
+map("n", "<leader>qp", "<cmd>cprevious<CR>", { desc = "Previous quickfix item" })
+map("n", "<leader>qf", "<cmd>cfirst<CR>", { desc = "First quickfix item" })
+map("n", "<leader>ql", "<cmd>clast<CR>", { desc = "Last quickfix item" })
+map("n", "<leader>qq", "<cmd>cexpr []<CR>", { desc = "Clear quickfix list" })
+map("n", "<leader>qd", function()
+  local qflist = vim.fn.getqflist()
+  local qf_info = vim.fn.getqflist({ idx = 0 })
+  local cur_idx = qf_info.idx
+  
+  if cur_idx > 0 and cur_idx <= #qflist then
+    table.remove(qflist, cur_idx)
+    vim.fn.setqflist({}, 'r', { items = qflist })
+    -- Move to the next item or previous if we removed the last one
+    if cur_idx > #qflist and #qflist > 0 then
+      vim.cmd("cprevious")
+    elseif #qflist > 0 then
+      vim.cmd("cc " .. cur_idx)
+    end
+  end
+end, { desc = "Delete current quickfix item" })
