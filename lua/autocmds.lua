@@ -83,6 +83,39 @@ vim.api.nvim_create_autocmd({"DirChanged", "VimEnter"}, {
   end,
 })
 
+-- Restart Biome LSP when directory changes to use correct local version
+vim.api.nvim_create_autocmd("DirChanged", {
+  pattern = "*",
+  callback = function()
+    -- Check if Biome LSP is attached to any buffer
+    local clients = vim.lsp.get_clients({ name = "biome" })
+    if #clients > 0 then
+      -- Check if local biome exists in new directory
+      local local_biome = vim.fn.getcwd() .. "/node_modules/.bin/biome"
+      local has_local_biome = vim.fn.executable(local_biome) == 1
+      
+      -- Get current client's cmd
+      local current_cmd = clients[1].config.cmd[1]
+      local is_using_local = current_cmd:match("node_modules/.bin/biome")
+      
+      -- Restart if we need to switch between local and global biome
+      if (has_local_biome and not is_using_local) or (not has_local_biome and is_using_local) then
+        vim.notify("Restarting Biome LSP to use " .. (has_local_biome and "local" or "global") .. " version", vim.log.levels.INFO)
+        
+        -- Stop all Biome clients
+        for _, client in ipairs(clients) do
+          client.stop()
+        end
+        
+        -- The LSP will automatically restart with the new cmd when needed
+        vim.defer_fn(function()
+          vim.cmd("LspStart biome")
+        end, 100)
+      end
+    end
+  end,
+})
+
 -- Handle Biome LSP formatting based on project configuration
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)

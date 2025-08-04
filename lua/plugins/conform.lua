@@ -1,6 +1,22 @@
+-- Cache for formatter detection to avoid repeated file checks
+local formatter_cache = {}
+
+-- Clear cache when directory changes
+vim.api.nvim_create_autocmd("DirChanged", {
+  pattern = "*",
+  callback = function()
+    formatter_cache = {}
+  end,
+})
+
 -- Function to detect which formatter to use
 local function get_js_formatters()
   local root_dir = vim.fn.getcwd()
+  
+  -- Check cache first
+  if formatter_cache[root_dir] then
+    return formatter_cache[root_dir]
+  end
   
   -- Check for config files
   local has_biome = false
@@ -34,16 +50,15 @@ local function get_js_formatters()
     -- Check if formatter is explicitly disabled in Biome
     if string.match(config_text, '"formatter"%s*:%s*{%s*"enabled"%s*:%s*false') then
       -- Biome formatter is disabled, use Prettier
-      return { "prettierd" }
+      formatter_cache[root_dir] = { "prettierd" }
+      return formatter_cache[root_dir]
     end
   end
   
   -- Priority: Biome > Prettier > default Prettier
-  if has_biome then
-    return { "biome" }
-  else
-    return { "prettierd" }
-  end
+  local result = has_biome and { "biome" } or { "prettierd" }
+  formatter_cache[root_dir] = result
+  return result
 end
 
 return {
