@@ -4,10 +4,19 @@ This document describes the integration of Biome, Prettier, and Vitest into the 
 
 ## Automatic Formatter Detection
 
-The configuration automatically detects which formatter to use for JavaScript/TypeScript files:
+The configuration intelligently detects which formatter to use for JavaScript/TypeScript files:
 
-1. **If `biome.json` or `biome.jsonc` exists**: Uses Biome
-2. **Otherwise**: Uses Prettier (default)
+1. **Both Biome and Prettier configs exist**:
+   - Checks if Biome has `formatter.enabled: false`
+   - If Biome formatter is disabled → Uses Prettier for formatting
+   - If Biome formatter is enabled → Uses Biome for formatting
+   - Biome LSP still provides linting in both cases
+
+2. **Only Biome config exists**: Uses Biome for formatting and linting
+
+3. **Only Prettier config exists**: Uses Prettier for formatting
+
+4. **No config files**: Defaults to Prettier
 
 This detection happens automatically - no manual configuration needed!
 

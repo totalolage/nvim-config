@@ -2,16 +2,48 @@
 local function get_js_formatters()
   local root_dir = vim.fn.getcwd()
   
-  -- Check for Biome config files
+  -- Check for config files
+  local has_biome = false
+  local has_prettier = false
+  
+  -- Check for Biome config
   local biome_configs = { "biome.json", "biome.jsonc" }
   for _, config in ipairs(biome_configs) do
     if vim.fn.filereadable(root_dir .. "/" .. config) == 1 then
-      return { "biome" }
+      has_biome = true
+      break
     end
   end
   
-  -- Default to Prettier
-  return { "prettierd" }
+  -- Check for Prettier config
+  local prettier_configs = { ".prettierrc", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", ".prettierrc.js", ".prettierrc.cjs", "prettier.config.js", "prettier.config.cjs" }
+  for _, config in ipairs(prettier_configs) do
+    if vim.fn.filereadable(root_dir .. "/" .. config) == 1 then
+      has_prettier = true
+      break
+    end
+  end
+  
+  -- If both exist, check if Biome is configured for formatting
+  if has_biome and has_prettier then
+    -- Read biome.json to check if formatter is disabled
+    local biome_config_path = vim.fn.filereadable(root_dir .. "/biome.json") == 1 and root_dir .. "/biome.json" or root_dir .. "/biome.jsonc"
+    local biome_config = vim.fn.readfile(biome_config_path)
+    local config_text = table.concat(biome_config, "\n")
+    
+    -- Check if formatter is explicitly disabled in Biome
+    if string.match(config_text, '"formatter"%s*:%s*{%s*"enabled"%s*:%s*false') then
+      -- Biome formatter is disabled, use Prettier
+      return { "prettierd" }
+    end
+  end
+  
+  -- Priority: Biome > Prettier > default Prettier
+  if has_biome then
+    return { "biome" }
+  else
+    return { "prettierd" }
+  end
 end
 
 return {

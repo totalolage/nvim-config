@@ -83,7 +83,7 @@ vim.api.nvim_create_autocmd({"DirChanged", "VimEnter"}, {
   end,
 })
 
--- Disable Biome LSP formatting provider to avoid conflicts with conform.nvim
+-- Handle Biome LSP formatting based on project configuration
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -91,10 +91,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
     
-    -- Disable Biome's built-in formatting to let conform.nvim handle it
+    -- For Biome, check if we should disable formatting
     if client.name == "biome" then
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
+      local root_dir = vim.fn.getcwd()
+      local has_prettier = false
+      
+      -- Check for Prettier config
+      local prettier_configs = { ".prettierrc", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", ".prettierrc.js", ".prettierrc.cjs", "prettier.config.js", "prettier.config.cjs" }
+      for _, config in ipairs(prettier_configs) do
+        if vim.fn.filereadable(root_dir .. "/" .. config) == 1 then
+          has_prettier = true
+          break
+        end
+      end
+      
+      -- If project has Prettier config, disable Biome formatting to let conform.nvim decide
+      if has_prettier then
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end
     end
   end,
 })
