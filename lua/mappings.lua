@@ -171,3 +171,6 @@ map("n", "<leader>qd", function()
     end
   end
 end, { desc = "Delete current quickfix item" })
+
+-- messages
+map("n", "<leader>fM", "<cmd>MessagesFloat<CR>", { desc = "Find messages (floating window)" })
