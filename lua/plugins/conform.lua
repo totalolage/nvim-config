@@ -1,4 +1,6 @@
--- Cache for formatter detection to avoid repeated file checks
+local biome_util = require "utils.biome"
+
+-- Cache for formatter detection
 local formatter_cache = {}
 
 -- Clear cache when directory changes
@@ -7,57 +9,21 @@ vim.api.nvim_create_autocmd("DirChanged", {
   callback = function()
     formatter_cache = {}
   end,
+  desc = "Clear formatter cache on directory change",
 })
 
--- Function to detect which formatter to use
+-- Determine which formatter to use for JavaScript/TypeScript files
 local function get_js_formatters()
-  local root_dir = vim.fn.getcwd()
-  
-  -- Check cache first
-  if formatter_cache[root_dir] then
-    return formatter_cache[root_dir]
+  local cwd = vim.fn.getcwd()
+
+  -- Check cache
+  if formatter_cache[cwd] then
+    return formatter_cache[cwd]
   end
-  
-  -- Check for config files
-  local has_biome = false
-  local has_prettier = false
-  
-  -- Check for Biome config
-  local biome_configs = { "biome.json", "biome.jsonc" }
-  for _, config in ipairs(biome_configs) do
-    if vim.fn.filereadable(root_dir .. "/" .. config) == 1 then
-      has_biome = true
-      break
-    end
-  end
-  
-  -- Check for Prettier config
-  local prettier_configs = { ".prettierrc", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", ".prettierrc.js", ".prettierrc.cjs", "prettier.config.js", "prettier.config.cjs" }
-  for _, config in ipairs(prettier_configs) do
-    if vim.fn.filereadable(root_dir .. "/" .. config) == 1 then
-      has_prettier = true
-      break
-    end
-  end
-  
-  -- If both exist, check if Biome is configured for formatting
-  if has_biome and has_prettier then
-    -- Read biome.json to check if formatter is disabled
-    local biome_config_path = vim.fn.filereadable(root_dir .. "/biome.json") == 1 and root_dir .. "/biome.json" or root_dir .. "/biome.jsonc"
-    local biome_config = vim.fn.readfile(biome_config_path)
-    local config_text = table.concat(biome_config, "\n")
-    
-    -- Check if formatter is explicitly disabled in Biome
-    if string.match(config_text, '"formatter"%s*:%s*{%s*"enabled"%s*:%s*false') then
-      -- Biome formatter is disabled, use Prettier
-      formatter_cache[root_dir] = { "prettierd" }
-      return formatter_cache[root_dir]
-    end
-  end
-  
-  -- Priority: Biome > Prettier > default Prettier
-  local result = has_biome and { "biome" } or { "prettierd" }
-  formatter_cache[root_dir] = result
+
+  -- Use biome utility to determine formatter
+  local result = biome_util.should_use_biome_formatter(cwd) and { "biome" } or { "prettierd" }
+  formatter_cache[cwd] = result
   return result
 end
 
@@ -116,14 +82,8 @@ return {
     -- Configure formatters
     formatters = {
       biome = {
-        -- Use biome check with apply flag for formatting
-        command = function()
-          local local_biome = vim.fn.getcwd() .. "/node_modules/.bin/biome"
-          if vim.fn.executable(local_biome) == 1 then
-            return local_biome
-          end
-          return "biome"
-        end,
+        -- Dynamically resolve biome executable path
+        command = biome_util.get_biome_executable,
         args = {
           "check",
           "--apply",

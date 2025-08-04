@@ -1,15 +1,13 @@
 return {
   "neovim/nvim-lspconfig",
-  -- dependencies = {
-  --   "hrsh7th/nvim-cmp",
-  -- },
   config = function()
     local nvlsp = require "nvchad.configs.lspconfig"
+    local lspconfig = require "lspconfig"
+    local biome_util = require "utils.biome"
+    
     nvlsp.defaults()
 
     local autocomplete_capibilities = require("cmp_nvim_lsp").default_capabilities()
-
-    local lspconfig = require "lspconfig"
 
     local servers = {
       "astro",
@@ -48,32 +46,34 @@ return {
         },
       }
     }
-    
-    -- Function to get the local biome executable if it exists
-    local function get_biome_cmd()
-      local local_biome = vim.fn.getcwd() .. "/node_modules/.bin/biome"
-      if vim.fn.executable(local_biome) == 1 then
-        return { local_biome, "lsp-proxy" }
-      end
-      -- Fallback to Mason's biome
-      return { "biome", "lsp-proxy" }
-    end
 
-    -- lsps with default config
+    -- Setup Biome with dynamic command resolution for local vs global binary
+    lspconfig.biome.setup {
+      on_attach = nvlsp.on_attach,
+      on_init = nvlsp.on_init,
+      capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
+      cmd = function()
+        -- Dynamically resolve the command when LSP starts
+        return biome_util.get_lsp_cmd()
+      end,
+      root_dir = function(fname)
+        -- Find project root by looking for biome config or git root
+        return lspconfig.util.root_pattern("biome.json", "biome.jsonc")(fname)
+          or lspconfig.util.find_git_ancestor(fname)
+          or vim.fn.getcwd()
+      end,
+    }
+    
+    -- Setup other language servers
     for _, lsp in ipairs(servers) do
-      local config = {
-        on_attach = nvlsp.on_attach,
-        on_init = nvlsp.on_init,
-        capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
-        settings = server_settings[lsp],
-      }
-      
-      -- Use local biome if available
-      if lsp == "biome" then
-        config.cmd = get_biome_cmd()
+      if lsp ~= "biome" then  -- Skip biome as it's configured above
+        lspconfig[lsp].setup {
+          on_attach = nvlsp.on_attach,
+          on_init = nvlsp.on_init,
+          capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
+          settings = server_settings[lsp],
+        }
       end
-      
-      lspconfig[lsp].setup(config)
     end
   end,
 }

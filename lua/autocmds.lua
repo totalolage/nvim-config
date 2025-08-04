@@ -83,66 +83,58 @@ vim.api.nvim_create_autocmd({"DirChanged", "VimEnter"}, {
   end,
 })
 
--- Restart Biome LSP when directory changes to use correct local version
+-- Restart Biome LSP when directory changes
+-- This ensures the correct local/global binary is used when switching between projects
 vim.api.nvim_create_autocmd("DirChanged", {
   pattern = "*",
   callback = function()
-    -- Check if Biome LSP is attached to any buffer
     local clients = vim.lsp.get_clients({ name = "biome" })
-    if #clients > 0 then
-      -- Check if local biome exists in new directory
-      local local_biome = vim.fn.getcwd() .. "/node_modules/.bin/biome"
-      local has_local_biome = vim.fn.executable(local_biome) == 1
-      
-      -- Get current client's cmd
-      local current_cmd = clients[1].config.cmd[1]
-      local is_using_local = current_cmd:match("node_modules/.bin/biome")
-      
-      -- Restart if we need to switch between local and global biome
-      if (has_local_biome and not is_using_local) or (not has_local_biome and is_using_local) then
-        vim.notify("Restarting Biome LSP to use " .. (has_local_biome and "local" or "global") .. " version", vim.log.levels.INFO)
-        
-        -- Stop all Biome clients
-        for _, client in ipairs(clients) do
-          client.stop()
-        end
-        
-        -- The LSP will automatically restart with the new cmd when needed
-        vim.defer_fn(function()
-          vim.cmd("LspStart biome")
-        end, 100)
-      end
-    end
-  end,
-})
-
--- Handle Biome LSP formatting based on project configuration
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client then
+    if #clients == 0 then
       return
     end
     
-    -- For Biome, check if we should disable formatting
-    if client.name == "biome" then
-      local root_dir = vim.fn.getcwd()
-      local has_prettier = false
-      
-      -- Check for Prettier config
-      local prettier_configs = { ".prettierrc", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", ".prettierrc.js", ".prettierrc.cjs", "prettier.config.js", "prettier.config.cjs" }
-      for _, config in ipairs(prettier_configs) do
-        if vim.fn.filereadable(root_dir .. "/" .. config) == 1 then
-          has_prettier = true
-          break
+    -- Stop all Biome clients to force re-evaluation of which binary to use
+    for _, client in ipairs(clients) do
+      client.stop(true)
+    end
+    
+    -- Restart LSP for JavaScript/TypeScript buffers after a short delay
+    vim.defer_fn(function()
+      local ft_patterns = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json" }
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype then
+          for _, pattern in ipairs(ft_patterns) do
+            if vim.bo[buf].filetype == pattern then
+              vim.api.nvim_buf_call(buf, function()
+                vim.cmd("LspStart biome")
+              end)
+              return -- Only need to start once
+            end
+          end
         end
       end
-      
-      -- If project has Prettier config, disable Biome formatting to let conform.nvim decide
-      if has_prettier then
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-      end
+    end, 200)
+  end,
+  desc = "Restart Biome LSP to use correct binary version"
+})
+
+-- Disable Biome LSP formatting when Prettier is present
+-- This prevents conflicts and lets conform.nvim handle formatter selection
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client or client.name ~= "biome" then
+      return
+    end
+    
+    local biome_util = require "utils.biome"
+    
+    -- Disable LSP formatting if we shouldn't use Biome as formatter
+    -- This lets conform.nvim handle all formatting decisions
+    if not biome_util.should_use_biome_formatter() then
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end
   end,
+  desc = "Configure Biome LSP formatting capabilities"
 })
