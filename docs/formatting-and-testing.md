@@ -2,37 +2,34 @@
 
 This document describes the integration of Biome, Prettier, and Vitest into the Neovim configuration.
 
+## Automatic Formatter Detection
+
+The configuration automatically detects which formatter to use for JavaScript/TypeScript files:
+
+1. **If `biome.json` or `biome.jsonc` exists**: Uses Biome
+2. **Otherwise**: Uses Prettier (default)
+
+This detection happens automatically - no manual configuration needed!
+
 ## Biome
 
 Biome is a fast formatter and linter for JavaScript/TypeScript projects.
 
-### Configuration
-
-Biome is configured in two ways:
-
-1. **LSP Integration** (Recommended): Biome LSP server provides formatting and code actions
-2. **Conform.nvim**: Available as an alternative formatter (commented out by default)
-
 ### Usage
 
-- **Automatic formatting on save**: Biome will automatically format and fix linting issues when you save a file
-- **Manual formatting**: Use `<leader>fm` to format the current buffer
-- **Create a biome.json**: Configure Biome rules in your project root
-
-To switch from Prettier to Biome in conform.nvim:
-1. Edit `lua/plugins/conform.lua`
-2. Uncomment the `"biome"` lines for JavaScript/TypeScript file types
-3. Comment out `"prettierd"`
+- **Manual formatting**: Use `<leader>fm` to format the current buffer (same as Prettier)
+- **Configuration**: Create a `biome.json` or `biome.jsonc` file in your project root
+- **Features**: Formatting, import organization, and linting (when formatting)
 
 ## Prettier
 
-Prettier continues to work as before through `prettierd` (a daemon for faster formatting).
+Prettier is the default formatter when no Biome configuration is detected.
 
 ### Usage
 
 - **Manual formatting**: Use `<leader>fm` to format the current buffer
-- **Format on save**: Uncomment the `format_on_save` section in `conform.lua`
 - **Configuration**: Create a `.prettierrc` file in your project root
+- **Format on save**: Uncomment the `format_on_save` section in `conform.lua` if desired
 
 ## Vitest
 
