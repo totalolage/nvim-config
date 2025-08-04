@@ -88,32 +88,41 @@ vim.api.nvim_create_autocmd({"DirChanged", "VimEnter"}, {
 vim.api.nvim_create_autocmd("DirChanged", {
   pattern = "*",
   callback = function()
-    local clients = vim.lsp.get_clients({ name = "biome" })
-    if #clients == 0 then
+    -- Use pcall to safely get clients in case LSP isn't ready
+    local ok, clients = pcall(vim.lsp.get_clients, { name = "biome" })
+    if not ok or #clients == 0 then
       return
     end
     
-    -- Stop all Biome clients to force re-evaluation of which binary to use
+    -- Track buffers that had Biome attached
+    local affected_buffers = {}
     for _, client in ipairs(clients) do
-      client.stop(true)
+      for buf, _ in pairs(client.attached_buffers or {}) do
+        table.insert(affected_buffers, buf)
+      end
     end
     
-    -- Restart LSP for JavaScript/TypeScript buffers after a short delay
-    vim.defer_fn(function()
-      local ft_patterns = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json" }
-      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype then
-          for _, pattern in ipairs(ft_patterns) do
-            if vim.bo[buf].filetype == pattern then
-              vim.api.nvim_buf_call(buf, function()
-                vim.cmd("LspStart biome")
-              end)
-              return -- Only need to start once
-            end
+    -- Stop all Biome clients
+    for _, client in ipairs(clients) do
+      -- Use pcall to handle any errors during stop
+      pcall(function() client.stop() end)
+    end
+    
+    -- Only restart if we had affected buffers
+    if #affected_buffers > 0 then
+      vim.defer_fn(function()
+        -- Restart for one of the affected buffers
+        for _, buf in ipairs(affected_buffers) do
+          if vim.api.nvim_buf_is_valid(buf) then
+            vim.api.nvim_buf_call(buf, function()
+              -- Use silent to avoid error messages
+              vim.cmd("silent! LspStart biome")
+            end)
+            return -- Only need to start once
           end
         end
-      end
-    end, 200)
+      end, 500) -- Increased delay to ensure clean shutdown
+    end
   end,
   desc = "Restart Biome LSP to use correct binary version"
 })

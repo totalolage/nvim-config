@@ -54,6 +54,7 @@ return {
       capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
       cmd = function()
         -- Dynamically resolve the command when LSP starts
+        -- This function is called each time the LSP client starts
         return biome_util.get_lsp_cmd()
       end,
       root_dir = function(fname)
@@ -62,6 +63,13 @@ return {
           or lspconfig.util.find_git_ancestor(fname)
           or vim.fn.getcwd()
       end,
+      -- Add handlers to prevent errors during shutdown/restart
+      handlers = {
+        ["$/progress"] = function(...) 
+          -- Wrap in pcall to prevent errors during shutdown
+          pcall(vim.lsp.handlers["$/progress"], ...)
+        end,
+      },
     }
     
     -- Setup other language servers
