@@ -13,6 +13,7 @@ return {
 
     local servers = {
       "astro",
+      "biome",
       "cssls",
       "eslint",
       "graphql",

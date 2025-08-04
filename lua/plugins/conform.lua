@@ -17,21 +17,25 @@ return {
       -- mdx = { "mdx-language-server" },
 
       javascript = {
+        -- "biome", -- Uncomment to use Biome instead of Prettier
         "eslint-lsp",
         "prettierd",
         "graphql",
       },
       javascriptreact = {
+        -- "biome", -- Uncomment to use Biome instead of Prettier
         "eslint-lsp",
         "prettierd",
         "graphql",
       },
       typescript = {
+        -- "biome", -- Uncomment to use Biome instead of Prettier
         "eslint-lsp",
         "prettierd",
         "graphql",
       },
       typescriptreact = {
+        -- "biome", -- Uncomment to use Biome instead of Prettier
         "eslint-lsp",
         "prettierd",
         "graphql",

@@ -9,6 +9,7 @@ return {
       -- webdev stuff
       "eslint-lsp",
       "prettierd",
+      "biome",
       "tailwindcss-language-server",
       "typescript-language-server",
       -- "flow-language-server",

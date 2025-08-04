@@ -82,3 +82,32 @@ vim.api.nvim_create_autocmd({"DirChanged", "VimEnter"}, {
     end
   end,
 })
+
+-- Biome LSP format on save with code actions
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then
+      return
+    end
+    
+    -- When the client is Biome, add an automatic event on save
+    -- that runs Biome's "source.fixAll.biome" code action.
+    -- This takes care of things like import sorting and linting fixes.
+    if client.name == "biome" then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = args.buf,
+        group = vim.api.nvim_create_augroup("BiomeFixAll", { clear = false }),
+        callback = function()
+          vim.lsp.buf.code_action({
+            context = {
+              only = { "source.fixAll.biome" },
+              diagnostics = {},
+            },
+            apply = true,
+          })
+        end,
+      })
+    end
+  end,
+})
