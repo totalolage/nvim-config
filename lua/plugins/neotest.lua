@@ -6,6 +6,7 @@ return {
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
     "nvim-neotest/neotest-jest",
+    "marilari88/neotest-vitest",
   },
   opts = function()
     return {
@@ -25,6 +26,12 @@ return {
           --
           --       return vim.fn.getcwd() .. "/jest.config.ts"
           --     end,
+        },
+        require "neotest-vitest" {
+          -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
+          filter_dir = function(name, rel_path, root)
+            return name ~= "node_modules"
+          end,
         },
       },
     }
