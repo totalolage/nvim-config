@@ -67,3 +67,18 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
+
+-- fnm integration - use correct node version when changing directories
+vim.api.nvim_create_autocmd({"DirChanged", "VimEnter"}, {
+  pattern = "*",
+  callback = function()
+    local cwd = vim.fn.getcwd()
+    local nvmrc_path = cwd .. "/.nvmrc"
+    
+    -- Check if .nvmrc exists in current directory
+    if vim.fn.filereadable(nvmrc_path) == 1 then
+      -- Source zshenv and use fnm
+      vim.fn.system("source ~/.zshenv && fnm use --silent-if-unchanged")
+    end
+  end,
+})
