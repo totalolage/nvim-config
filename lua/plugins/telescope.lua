@@ -1,7 +1,7 @@
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
-    "rcarriga/nvim-notify",
+    { "rcarriga/nvim-notify", lazy = false, priority = 100 },
   },
   opts = function(_, opts)
     -- Extend existing options

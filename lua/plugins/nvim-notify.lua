@@ -1,6 +1,7 @@
 return {
   "rcarriga/nvim-notify",
-  event = "VeryLazy",
+  lazy = false,
+  priority = 100,
   config = function()
     local notify = require("notify")
     
@@ -39,5 +40,23 @@ return {
     
     -- Set nvim-notify as the default notification handler
     vim.notify = notify
+    
+    -- Create a command to test notifications
+    vim.api.nvim_create_user_command("NotifyTest", function()
+      vim.notify("This is an info notification", vim.log.levels.INFO, { title = "Test" })
+      vim.notify("This is a warning notification", vim.log.levels.WARN, { title = "Test" })
+      vim.notify("This is an error notification", vim.log.levels.ERROR, { title = "Test" })
+    end, { desc = "Test nvim-notify notifications" })
+    
+    -- Create a command to show messages in notify
+    vim.api.nvim_create_user_command("MessagesToNotify", function()
+      local messages = vim.fn.execute("messages")
+      local lines = vim.split(messages, "\n")
+      for _, line in ipairs(lines) do
+        if line ~= "" then
+          vim.notify(line, vim.log.levels.INFO, { title = "Messages" })
+        end
+      end
+    end, { desc = "Show :messages in nvim-notify" })
   end,
 }
