@@ -102,7 +102,13 @@ return {
     formatters = {
       biome = {
         -- Use biome check with apply flag for formatting
-        command = "biome",
+        command = function()
+          local local_biome = vim.fn.getcwd() .. "/node_modules/.bin/biome"
+          if vim.fn.executable(local_biome) == 1 then
+            return local_biome
+          end
+          return "biome"
+        end,
         args = {
           "check",
           "--apply",

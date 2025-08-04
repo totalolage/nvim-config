@@ -48,15 +48,32 @@ return {
         },
       }
     }
+    
+    -- Function to get the local biome executable if it exists
+    local function get_biome_cmd()
+      local local_biome = vim.fn.getcwd() .. "/node_modules/.bin/biome"
+      if vim.fn.executable(local_biome) == 1 then
+        return { local_biome, "lsp-proxy" }
+      end
+      -- Fallback to Mason's biome
+      return { "biome", "lsp-proxy" }
+    end
 
     -- lsps with default config
     for _, lsp in ipairs(servers) do
-      lspconfig[lsp].setup {
+      local config = {
         on_attach = nvlsp.on_attach,
         on_init = nvlsp.on_init,
         capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
         settings = server_settings[lsp],
       }
+      
+      -- Use local biome if available
+      if lsp == "biome" then
+        config.cmd = get_biome_cmd()
+      end
+      
+      lspconfig[lsp].setup(config)
     end
   end,
 }
