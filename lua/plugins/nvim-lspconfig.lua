@@ -4,6 +4,10 @@ return {
     local nvlsp = require "nvchad.configs.lspconfig"
     local lspconfig = require "lspconfig"
     local biome_util = require "utils.biome"
+    local lsp_protection = require "utils.lsp-protection"
+    
+    -- Initialize LSP protection
+    lsp_protection.init()
     
     nvlsp.defaults()
 
@@ -69,14 +73,34 @@ return {
           -- Wrap in pcall to prevent errors during shutdown
           pcall(vim.lsp.handlers["$/progress"], ...)
         end,
+        -- Add a general handler wrapper to catch all requests
+        ["workspace/configuration"] = function(err, result, ctx, config)
+          -- Check if client is still valid before processing
+          local client = vim.lsp.get_client_by_id(ctx.client_id)
+          if client and client.request then
+            return vim.lsp.handlers["workspace/configuration"](err, result, ctx, config)
+          end
+        end,
       },
+      -- Override on_attach to add protection
+      on_attach = function(client, bufnr)
+        -- Protect the client
+        lsp_protection.protect_client(client)
+        -- Wrap the original on_attach
+        nvlsp.on_attach(client, bufnr)
+      end,
     }
     
     -- Setup other language servers
     for _, lsp in ipairs(servers) do
       if lsp ~= "biome" then  -- Skip biome as it's configured above
         lspconfig[lsp].setup {
-          on_attach = nvlsp.on_attach,
+          on_attach = function(client, bufnr)
+            -- Protect the client
+            lsp_protection.protect_client(client)
+            -- Call original on_attach
+            nvlsp.on_attach(client, bufnr)
+          end,
           on_init = nvlsp.on_init,
           capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
           settings = server_settings[lsp],
