@@ -83,6 +83,106 @@ vim.api.nvim_create_autocmd({ "DirChanged", "VimEnter" }, {
   end,
 })
 
+-- Update Kitty tab title with website-style format
+vim.api.nvim_create_autocmd({"DirChanged", "BufEnter", "FocusGained", "VimEnter"}, {
+  pattern = "*",
+  callback = function()
+    local title_parts = {}
+    local command = "nvim"
+
+    -- Check if we're in a git repo
+    local gitdir = vim.fn.system("git rev-parse --git-dir 2>/dev/null"):gsub("\n", "")
+
+    if gitdir ~= "" and not gitdir:match("^fatal:") then
+      -- Check if we're in a bare repo or its subdirectory
+      local is_bare = vim.fn.system("git rev-parse --is-bare-repository 2>/dev/null"):gsub("\n", "") == "true"
+
+      if is_bare then
+        local cwd = vim.fn.getcwd()
+        local abs_gitdir = vim.fn.system("git rev-parse --absolute-git-dir 2>/dev/null"):gsub("\n", "")
+
+        if cwd == abs_gitdir then
+          -- We're in the root of a bare repo
+          local project_root_dir = vim.fn.fnamemodify(cwd, ":t")
+          table.insert(title_parts, project_root_dir)
+          table.insert(title_parts, command)
+        else
+          -- We're in a subdirectory of a bare repo
+          local current_dir = vim.fn.fnamemodify(cwd, ":t")
+          local project_root_dir = vim.fn.fnamemodify(abs_gitdir, ":t")
+
+          table.insert(title_parts, current_dir)
+          table.insert(title_parts, project_root_dir)
+          table.insert(title_parts, command)
+        end
+      else
+        -- Try to get worktree path
+        local worktree_path = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n", "")
+
+        if worktree_path ~= "" and not worktree_path:match("^fatal:") and gitdir:match("/worktrees/") then
+          -- We're in a git worktree
+          local worktree_dir = vim.fn.fnamemodify(worktree_path, ":t")
+
+          -- Get project root dir (parent of worktrees)
+          local project_root = vim.fn.fnamemodify(gitdir:match("(.*)/worktrees/"), ":t")
+
+          table.insert(title_parts, worktree_dir)
+          table.insert(title_parts, project_root)
+          table.insert(title_parts, command)
+        else
+          -- Regular git repo (non-worktree)
+          local current_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+
+          -- Get branch name
+          local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null"):gsub("\n", "")
+
+          -- Get the default remote (first remote or upstream of current branch)
+          local remote = vim.fn.system("git config branch." .. branch .. ".remote 2>/dev/null"):gsub("\n", "")
+          if remote == "" then
+            -- If current branch has no remote, get the first available remote
+            remote = vim.fn.system("git remote 2>/dev/null | head -n1"):gsub("\n", "")
+          end
+
+          -- Get the main branch from remote/HEAD
+          local main_branch = ""
+          if remote ~= "" then
+            main_branch = vim.fn.system("git symbolic-ref refs/remotes/" .. remote .. "/HEAD 2>/dev/null | sed 's@^refs/remotes/" .. remote .. "/@@'"):gsub("\n", "")
+          end
+
+          -- Fallback to checking for main or master if remote/HEAD is not set
+          if main_branch == "" or main_branch:match("^fatal:") then
+            local has_main = vim.fn.system("git rev-parse --verify --quiet refs/heads/main 2>/dev/null"):gsub("\n", "")
+            if has_main ~= "" then
+              main_branch = "main"
+            else
+              main_branch = "master"
+            end
+          end
+
+          -- Only show branch if it's not the main branch
+          if branch ~= "" and not branch:match("^fatal:") and branch ~= "HEAD" and branch ~= main_branch then
+            table.insert(title_parts, string.format("%s(%s)", current_dir, branch))
+          else
+            table.insert(title_parts, current_dir)
+          end
+
+          table.insert(title_parts, command)
+        end
+      end
+    else
+      -- Not in a git repo
+      local current_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+      table.insert(title_parts, current_dir)
+      table.insert(title_parts, command)
+    end
+
+    -- Join with pipe separator and send OSC escape sequence
+    local title = table.concat(title_parts, " | ")
+    local escape_seq = string.format("\027]0;%s\007", title)
+    io.write(escape_seq)
+  end,
+})
+
 -- Handle Biome LSP formatting based on project configuration
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
