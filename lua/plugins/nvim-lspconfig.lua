@@ -9,8 +9,6 @@ return {
 
     local autocomplete_capibilities = require("cmp_nvim_lsp").default_capabilities()
 
-    local lspconfig = require "lspconfig"
-
     local servers = {
       "astro",
       "biome",
@@ -46,17 +44,24 @@ return {
         schemaStore = {
           enable = true,
         },
-      }
+      },
     }
 
-    -- lsps with default config
+    -- defaults via autocommand
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        nvlsp.on_attach(client, args.buf)
+      end,
+    })
+
     for _, lsp in ipairs(servers) do
-      lspconfig[lsp].setup {
-        on_attach = nvlsp.on_attach,
-        on_init = nvlsp.on_init,
+      vim.lsp.config(lsp, {
         capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
         settings = server_settings[lsp],
-      }
+      })
     end
+
+    vim.lsp.enable(servers)
   end,
 }
