@@ -1,5 +1,25 @@
 require "nvchad.autocmds"
 
+local function apply_opencode_pane_transparency()
+  -- opencode.nvim uses Snacks highlight groups for its split pane.
+  -- Snacks may (re)link these groups on ColorScheme, so we enforce a transparent bg.
+  local transparent = { bg = "NONE", ctermbg = "NONE" }
+  vim.api.nvim_set_hl(0, "SnacksNormal", transparent)
+  vim.api.nvim_set_hl(0, "SnacksNormalNC", transparent)
+end
+
+apply_opencode_pane_transparency()
+
+local opencode_transparency_group = vim.api.nvim_create_augroup("OpencodeTransparency", { clear = true })
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = opencode_transparency_group,
+  pattern = "*",
+  callback = function()
+    vim.schedule(apply_opencode_pane_transparency)
+  end,
+})
+
 -- CD to directory in which nvim is opened
 vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*",
