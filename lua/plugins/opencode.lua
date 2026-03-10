@@ -40,7 +40,7 @@ return {
       desc = "Add range to opencode",
     },
     {
-      "goo",
+      "gO",
       function()
         return require("opencode").operator "@this " .. "_"
       end,

@@ -70,8 +70,17 @@ M.base46 = {
     TelescopeResultsBorder = { bg = "NONE", fg = "one_bg3" },
     TelescopePreviewNormal = { bg = "NONE" },
     TelescopePreviewBorder = { bg = "NONE", fg = "one_bg3" },
+
+    LspHoverNormal = { bg = "one_bg" },
+    LspHoverBorder = { bg = "one_bg", fg = "one_bg3" },
   },
 }
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+  focusable = true,
+  winhighlight = "Normal:LspHoverNormal,FloatBorder:LspHoverBorder",
+})
 
 -- M.nvdash = { load_on_startup = true }
 -- M.ui = {

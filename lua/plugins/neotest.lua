@@ -17,22 +17,22 @@ return {
         open_on_run = false,
       },
       adapters = {
-        require "neotest-jest" {
-          jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand "%:p:h"),
-          --     jestConfigFile = function(file)
-          --       if string.find(file, "/libs/") then
-          --         return string.match(file, "(.-/[^/]+/)src") .. "jest.config.ts"
-          --       end
-          --
-          --       return vim.fn.getcwd() .. "/jest.config.ts"
-          --     end,
-        },
-        -- require "neotest-vitest" {
-        --   -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
-        --   filter_dir = function(name, rel_path, root)
-        --     return name ~= "node_modules"
-        --   end,
+        -- require "neotest-jest" {
+        --   jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand "%:p:h"),
+        --   --     jestConfigFile = function(file)
+        --   --       if string.find(file, "/libs/") then
+        --   --         return string.match(file, "(.-/[^/]+/)src") .. "jest.config.ts"
+        --   --       end
+        --   --
+        --   --       return vim.fn.getcwd() .. "/jest.config.ts"
+        --   --     end,
         -- },
+        require "neotest-vitest" {
+          -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
+          filter_dir = function(name, rel_path, root)
+            return name ~= "node_modules"
+          end,
+        },
       },
     }
   end,

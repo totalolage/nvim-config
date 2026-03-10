@@ -45,6 +45,13 @@ return {
           enable = true,
         },
       },
+      cssls = {
+        css = {
+          lint = {
+            unknownAtRules = "ignore",
+          },
+        },
+      },
     }
 
     -- defaults via autocommand

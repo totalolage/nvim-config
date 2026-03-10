@@ -28,32 +28,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
--- Kitty padding in intergrated terminal
-vim.api.nvim_create_autocmd("TermOpen", {
-  pattern = "*",
-  callback = function()
-    vim.system {
-      "kitty",
-      "@",
-      "set-spacing",
-      "padding=0",
-      "margin=0",
-    }
-  end,
-})
-
-vim.api.nvim_create_autocmd("TermClose", {
-  pattern = "*",
-  callback = function()
-    vim.system {
-      "kitty",
-      "@",
-      "padding=default",
-      "margin=default",
-    }
-  end,
-})
-
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
