@@ -40,6 +40,20 @@ return {
           },
         },
       },
+      tailwindcss = {
+        tailwindCSS = {
+          classFunctions = {
+            "tw",
+            "tw\\.[a-z-]+",
+            "clsx",
+            "classnames",
+            "cn",
+            "cva",
+            "twMerge",
+            "tailwindMerge",
+          },
+        },
+      },
       yamlls = {
         schemaStore = {
           enable = true,
