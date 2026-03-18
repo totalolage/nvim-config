@@ -11,6 +11,12 @@ vim.opt.cursorlineopt = 'both'
 vim.filetype.add({
   extension = {
     mdx = "mdx",
+    png = "image",
+    jpg = "image",
+    jpeg = "image",
+    bmp = "image",
+    gif = "image",
+    webp = "image",
   },
 })
 
