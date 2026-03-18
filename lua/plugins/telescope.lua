@@ -13,14 +13,14 @@ return {
         },
       },
     })
-    
+
     -- Add notify extension config
     opts.extensions = vim.tbl_deep_extend("force", opts.extensions or {}, {
       notify = {
         -- Telescope notify extension config
       },
     })
-    
+
     return opts
   end,
   config = function(_, opts)
@@ -35,10 +35,7 @@ return {
       local cache_path = cache_dir .. cache_name
       local uv = vim.uv or vim.loop
       if not (uv and type(uv.fs_stat) == "function" and uv.fs_stat(cache_path)) then
-        vim.notify(
-          ("base46 cache missing (%s); continuing without it"):format(cache_path),
-          vim.log.levels.WARN
-        )
+        vim.notify(("base46 cache missing (%s); continuing without it"):format(cache_path), vim.log.levels.WARN)
         return
       end
 
@@ -52,13 +49,13 @@ return {
       end
     end
 
-    load_base46_cache("telescope")
+    load_base46_cache "telescope"
 
-    local telescope = require("telescope")
+    local telescope = require "telescope"
     telescope.setup(opts)
-    
+
     -- Load the notify extension
-    telescope.load_extension("notify")
+    telescope.load_extension "notify"
   end,
   keys = {
     {
