@@ -10,6 +10,7 @@ return {
       "eslint-lsp",
       "prettierd",
       "biome",
+      "oxlint",
       "tailwindcss-language-server",
       "typescript-language-server",
       -- "flow-language-server",
