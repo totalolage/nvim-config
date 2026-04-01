@@ -293,15 +293,5 @@ return {
     --   timeout_ms = 2000,
     --   lsp_fallback = true,
     -- },
-
-    keys = {
-      {
-        "<leader>fm",
-        function()
-          require("conform").format { async = true, lsp_format = "fallback" }
-        end,
-        desc = "Format current buffer",
-      },
-    },
   },
 }

@@ -53,6 +53,9 @@ end, { desc = "Show diagnostics" })
 
 -- LSP
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+map("n", "<leader>fm", function()
+  require("actions.format").fix_and_format()
+end, { desc = "Format and autofix current buffer" })
 
 -- file opening:
 map("n", "<leader>of", function()
