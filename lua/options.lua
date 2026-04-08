@@ -1,5 +1,7 @@
 require "nvchad.options"
 
+vim.lsp.document_color.enable(false)
+
 vim.opt.relativenumber = true
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
