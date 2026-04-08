@@ -111,10 +111,10 @@ map("n", "<leader>of", function()
 
   vim.cmd("e " .. filename)
   vim.fn.cursor(line, column)
-  
+
   -- If we have a line range, select it in visual line mode
   if end_line and end_line > line then
-    vim.cmd("normal! V")
+    vim.cmd "normal! V"
     vim.fn.cursor(end_line, 1)
   end
 end, { desc = "Open last yanked file" })
@@ -132,11 +132,28 @@ map("n", "<A-Shift-Tab>", function()
   require("nvchad.tabufline").move_buf(-1)
 end, { desc = "Move buffer to the left" })
 
--- window sizing
-map("n", "=", "<C-w>+", { desc = "Increase window height" })
-map("n", "-", "<C-w>-", { desc = "Decrease window height" })
-map("n", "+", "<C-w>>", { desc = "Increase window width" })
-map("n", "_", "<C-w><", { desc = "Decrease window width" })
+-- -- LSP navigation
+-- map({ "n", "x", "o" }, "<A-o>", function()
+--   if vim.treesitter.get_parser(nil, nil, { error = false }) then
+--     require("vim.treesitter._select").select_parent(vim.v.count1)
+--   else
+--     vim.lsp.buf.selection_range(vim.v.count1)
+--   end
+-- end, { desc = "Select parent treesitter node or outer incremental lsp selections" })
+--
+-- map({ "n", "x", "o" }, "<A-i>", function()
+--   if vim.treesitter.get_parser(nil, nil, { error = false }) then
+--     require("vim.treesitter._select").select_child(vim.v.count1)
+--   else
+--     vim.lsp.buf.selection_range(-vim.v.count1)
+--   end
+-- end, { desc = "Select child treesitter node or inner incremental lsp selections" })
+
+-- -- window sizing
+-- map("n", "=", "<C-w>+", { desc = "Increase window height" })
+-- map("n", "-", "<C-w>-", { desc = "Decrease window height" })
+-- map("n", "+", "<C-w>>", { desc = "Increase window width" })
+-- map("n", "_", "<C-w><", { desc = "Decrease window width" })
 
 -- disable arrow keys
 map({ "n", "v" }, "<Left>", "<Nop>", { noremap = true })
@@ -160,15 +177,15 @@ map("n", "<leader>ql", "<cmd>clast<CR>", { desc = "Last quickfix item" })
 map("n", "<leader>qq", "<cmd>cexpr []<CR>", { desc = "Clear quickfix list" })
 map("n", "<leader>qd", function()
   local qflist = vim.fn.getqflist()
-  local qf_info = vim.fn.getqflist({ idx = 0 })
+  local qf_info = vim.fn.getqflist { idx = 0 }
   local cur_idx = qf_info.idx
-  
+
   if cur_idx > 0 and cur_idx <= #qflist then
     table.remove(qflist, cur_idx)
-    vim.fn.setqflist({}, 'r', { items = qflist })
+    vim.fn.setqflist({}, "r", { items = qflist })
     -- Move to the next item or previous if we removed the last one
     if cur_idx > #qflist and #qflist > 0 then
-      vim.cmd("cprevious")
+      vim.cmd "cprevious"
     elseif #qflist > 0 then
       vim.cmd("cc " .. cur_idx)
     end
