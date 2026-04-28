@@ -280,6 +280,9 @@ return {
       typescriptreact = resolve_preferred_formatters(js_formatter_candidates),
       yaml = { "yamlfmt" },
       markdown = { "remark-language-server" },
+      sh = { "shfmt" },
+      bash = { "shfmt" },
+      zsh = { "shfmt" },
     },
 
     -- Configure formatters

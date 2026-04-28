@@ -19,12 +19,15 @@ return {
       "html",
       "jsonls",
       "tailwindcss",
-      "ts_ls",
+      -- "ts_ls",
+      "tsgo",
       "yamlls",
+      "bashls",
     }
 
     local server_settings = {
-      ts_ls = {
+      tsgo = {
+      -- ts_ls = {
         implicitProjectConfiguration = {
           checkJs = true,
         },
@@ -69,7 +72,6 @@ return {
       },
     }
 
-    -- defaults via autocommand
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)

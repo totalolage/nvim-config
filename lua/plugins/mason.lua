@@ -12,7 +12,7 @@ return {
       "biome",
       "oxlint",
       "tailwindcss-language-server",
-      "typescript-language-server",
+      "tsgo",
       -- "flow-language-server",
       "graphql-language-service-cli",
       "astro-language-server",
@@ -22,6 +22,8 @@ return {
       "yaml-language-server",
       -- "mdx-analyzer",
       -- "remark-language-server",
+      "shfmt",
+      "bash-language-server",
     },
   }),
 }
