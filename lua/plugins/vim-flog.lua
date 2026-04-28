@@ -47,9 +47,9 @@ return {
       desc = "Amend last commit without editing",
     },
     {
-      "<leader>gab",
-      "<cmd>Git absorb --and-rebase<CR>",
-      desc = "Amend last commit",
+      "<leader>gA",
+      "<cmd>Git absorb --base=refs/remotes/origin/HEAD --and-rebase<CR>",
+      desc = "Absorb changes",
     },
     {
       "<leader>gmt",
