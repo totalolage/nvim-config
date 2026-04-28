@@ -47,6 +47,11 @@ return {
       desc = "Amend last commit without editing",
     },
     {
+      "<leader>gab",
+      "<cmd>Git absorb --and-rebase<CR>",
+      desc = "Amend last commit",
+    },
+    {
       "<leader>gmt",
       "<cmd>Git mergetool<CR>",
       desc = "Mergetool",
