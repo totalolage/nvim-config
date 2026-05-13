@@ -26,6 +26,9 @@ return {
     }
 
     local server_settings = {
+      oxlint = {
+        run = "onSave",
+      },
       tsgo = {
       -- ts_ls = {
         implicitProjectConfiguration = {
