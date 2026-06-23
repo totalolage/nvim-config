@@ -76,11 +76,13 @@ M.base46 = {
   },
 }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-  focusable = true,
-  winhighlight = "Normal:LspHoverNormal,FloatBorder:LspHoverBorder",
-})
+vim.keymap.set("n", "K", function()
+  vim.lsp.buf.hover({
+    border = "rounded",
+    focusable = true,
+    winhighlight = "Normal:LspHoverNormal,FloatBorder:LspHoverBorder",
+  })
+end, { desc = "LSP hover" })
 
 -- M.nvdash = { load_on_startup = true }
 -- M.ui = {

@@ -1,5 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
+  main = "nvim-treesitter.config",
   lazy = false,
   opts_extend = { "ensure_installed" },
   init = function()
