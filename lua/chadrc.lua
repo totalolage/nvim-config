@@ -1,9 +1,35 @@
--- This file needs to have same structure as nvconfig.lua 
+-- This file needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
--- Please read that file to know all available options :( 
+-- Please read that file to know all available options :(
 
 ---@type ChadrcConfig
 local M = {}
+
+M.mason = {
+  pkgs = {
+    "astro-language-server",
+    "bash-language-server",
+    "biome",
+    "css-lsp",
+    "eslint-lsp",
+    "graphql-language-service-cli",
+    "html-lsp",
+    "json-lsp",
+    "lua-language-server",
+    "oxlint",
+    "prettierd",
+    "shfmt",
+    "stylua",
+    "tailwindcss-language-server",
+    "tree-sitter-cli",
+    -- Native TypeScript 7 still lacks ts_ls code-action and refactor parity.
+    -- When parity lands, enable "tsgo" and swap ts_ls for tsc in nvim-lspconfig.lua.
+    -- "tsgo",
+    "typescript-language-server",
+    "yaml-language-server",
+    "yamlfmt",
+  },
+}
 
 M.base46 = {
   theme = "pastelbeans",
@@ -77,11 +103,11 @@ M.base46 = {
 }
 
 vim.keymap.set("n", "K", function()
-  vim.lsp.buf.hover({
+  vim.lsp.buf.hover {
     border = "rounded",
     focusable = true,
     winhighlight = "Normal:LspHoverNormal,FloatBorder:LspHoverBorder",
-  })
+  }
 end, { desc = "LSP hover" })
 
 -- M.nvdash = { load_on_startup = true }

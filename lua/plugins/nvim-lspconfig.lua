@@ -19,8 +19,10 @@ return {
       "html",
       "jsonls",
       "tailwindcss",
-      -- "ts_ls",
-      "tsgo",
+      -- Native TypeScript 7 still lacks ts_ls code-action and refactor parity.
+      -- Once parity lands, enable tsc, disable ts_ls, and swap the Mason packages.
+      -- "tsc",
+      "ts_ls",
       "yamlls",
       "bashls",
     }
@@ -29,8 +31,7 @@ return {
       oxlint = {
         run = "onSave",
       },
-      tsgo = {
-      -- ts_ls = {
+      ts_ls = {
         implicitProjectConfiguration = {
           checkJs = true,
         },

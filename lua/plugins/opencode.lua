@@ -1,9 +1,26 @@
+local opencode_cmd = "opencode --port"
+local opencode_terminal_opts = {
+  win = {
+    position = "float",
+    width = 0.85,
+    height = 0.85,
+    border = "rounded",
+    enter = true,
+  },
+}
+
 return {
   "nickjvandyke/opencode.nvim",
 
   dependencies = {
     { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
   },
+
+  config = function()
+    require("opencode.config").opts.server.start = function()
+      require("snacks.terminal").open(opencode_cmd, opencode_terminal_opts)
+    end
+  end,
 
   keys = {
     {
@@ -25,7 +42,7 @@ return {
     {
       "<A-o>",
       function()
-        require("opencode").toggle()
+        require("snacks.terminal").toggle(opencode_cmd, opencode_terminal_opts)
       end,
       mode = { "n", "t" },
       desc = "Toggle opencode",
