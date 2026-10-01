@@ -87,6 +87,12 @@ return {
       vim.lsp.config(lsp, {
         capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, autocomplete_capibilities),
         settings = server_settings[lsp],
+        cmd = lsp == "graphql" and function(dispatchers, config)
+          return vim.lsp.rpc.start(
+            { "graphql-lsp", "server", "-m", "stream", "-c", config.root_dir or vim.fn.getcwd() },
+            dispatchers
+          )
+        end or nil,
       })
     end
 

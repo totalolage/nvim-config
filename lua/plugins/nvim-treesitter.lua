@@ -1,8 +1,9 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
-  main = "nvim-treesitter.config",
+  main = "nvim-treesitter",
   lazy = false,
+  build = ":TSUpdate",
   opts_extend = { "ensure_installed" },
   init = function()
     local treesitter_plugin = require("lazy.core.config").plugins["nvim-treesitter"]
@@ -27,6 +28,22 @@ return {
       "typescript",
     },
   },
+  config = function(_, opts)
+    local treesitter = require "nvim-treesitter"
+    treesitter.setup { install_dir = vim.fn.stdpath("data") .. "/site" }
+    treesitter.install(opts.ensure_installed)
+
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("UserTreesitterHighlight", { clear = true }),
+      callback = function(args)
+        local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+        local ok, available = pcall(vim.treesitter.language.add, lang or "")
+        if lang and ok and available then
+          vim.treesitter.start(args.buf, lang)
+        end
+      end,
+    })
+  end,
   keys = {
     {
       "<leader>tsp",
