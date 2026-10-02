@@ -197,3 +197,6 @@ end, { desc = "Delete current quickfix item" })
 
 -- messages
 map("n", "<leader>fM", "<cmd>MessagesFloat<CR>", { desc = "Find messages (floating window)" })
+
+-- Keep completion word acceptance after NvChad's default insert mappings.
+require("configs.codex_complete").map_accept_word()
