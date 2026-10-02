@@ -2,6 +2,17 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+-- Keep terminal toggles available while editing as well as in terminal mode.
+for _, term in ipairs {
+  { key = "<A-i>", pos = "float", id = "floatTerm", desc = "Toggle floating terminal" },
+  { key = "<A-v>", pos = "vsp", id = "vtoggleTerm", desc = "Toggle vertical terminal" },
+  { key = "<A-h>", pos = "sp", id = "htoggleTerm", desc = "Toggle horizontal terminal" },
+} do
+  map({ "n", "i", "t" }, term.key, function()
+    require("nvchad.term").toggle { pos = term.pos, id = term.id }
+  end, { desc = term.desc })
+end
+
 -- path yanks: (broken for some reason)
 map("n", "<leader>yf", "", { desc = "Yank filename" })
 map("n", "<leader>yf ", "<cmd>let @+ = expand('%:t')<CR>", { desc = "Yank filename" })
