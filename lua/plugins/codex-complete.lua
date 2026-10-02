@@ -4,6 +4,10 @@ return {
   main = "codex_complete",
   event = { "InsertEnter", "VeryLazy" },
   opts = {
+    codex = {
+      model = "gpt-6-luna",
+      effort = "low",
+    },
     keymaps = {
       accept = "<C-y>",
       dismiss = "<C-]>",
