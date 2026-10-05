@@ -19,7 +19,8 @@ return {
       metadata = metadata or {}
       vim.system({ "sh", "-c", cmd }, {
         env = {
-          GIT_WORKTREE_PATH = metadata.path or "",
+          -- The plugin reports the path as typed, relative to the repository root
+          GIT_WORKTREE_PATH = metadata.path and Worktree.get_worktree_path(metadata.path) or "",
           GIT_WORKTREE_PREV_PATH = metadata.prev_path or "",
           GIT_WORKTREE_BRANCH = metadata.branch or "",
           GIT_WORKTREE_UPSTREAM = metadata.upstream or "",
